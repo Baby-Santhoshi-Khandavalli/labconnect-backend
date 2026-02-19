@@ -1,4 +1,16 @@
-package com.labconnect.DTORespone;
-
-public class TestResponse {
+package com.labconnect.DTOResponse;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class TestResponse{
+    private Long testId;
+    private String name;
+    private String department;
+    private String method;
+    private String status;
 }
