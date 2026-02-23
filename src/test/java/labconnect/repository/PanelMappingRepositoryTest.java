@@ -1,54 +1,98 @@
 package com.labconnect.repository;
+
 import com.labconnect.models.PanelMapping;
-import com.labconnect.models.Test;
 import com.labconnect.models.TestPanel;
+import com.labconnect.models.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PanelMappingRepositoryTest {
+
     @Mock
-    private PanelMappingRepository mappingRepository;
-    private TestPanel lftPanel;
-    private Test altTest;
-    private Test astTest;
+    private PanelMappingRepository panelMappingRepository;
+
+    private PanelMapping mapping1;
+    private PanelMapping mapping2;
 
     @BeforeEach
     void setUp() {
-        lftPanel = new TestPanel();
-        lftPanel.setPanelId(1L);
-        lftPanel.setName("LFT");
-        altTest = new Test();
-        altTest.setTestId(10L);
-        altTest.setName("ALT");
-        astTest = new Test();
-        astTest.setTestId(11L);
-        astTest.setName("AST");
+        TestPanel panel = new TestPanel();
+        panel.setPanelId(5L);
+        panel.setName("LFT");
+
+        Test t1 = new Test();
+        t1.setTestId(11L);
+        t1.setName("ALT");
+
+        Test t2 = new Test();
+        t2.setTestId(12L);
+        t2.setName("AST");
+
+        mapping1 = new PanelMapping();
+        mapping1.setMappingId(100L);
+        mapping1.setPanel(panel);
+        mapping1.setTest(t1);
+
+        mapping2 = new PanelMapping();
+        mapping2.setMappingId(101L);
+        mapping2.setPanel(panel);
+        mapping2.setTest(t2);
     }
 
     @org.junit.jupiter.api.Test
-    void findByPanel_PanelId_returnsMappings() {
+    void findByPanel_PanelId_shouldReturnList_whenMappingsExist() {
+        when(panelMappingRepository.findByPanel_PanelId(5L))
+                .thenReturn(List.of(mapping1, mapping2));
 
-        PanelMapping m1 = new PanelMapping(); m1.setPanel(lftPanel); m1.setTest(altTest);
-        PanelMapping m2 = new PanelMapping(); m2.setPanel(lftPanel); m2.setTest(astTest);
-        when(mappingRepository.findByPanel_PanelId(1L)).thenReturn(List.of(m1, m2));
-        List<PanelMapping> found = mappingRepository.findByPanel_PanelId(1L);
-        assertEquals(2, found.size());
-        assertTrue(found.stream().anyMatch(pm -> "ALT".equals(pm.getTest().getName())));
-        verify(mappingRepository, times(1)).findByPanel_PanelId(1L);
+        List<PanelMapping> result = panelMappingRepository.findByPanel_PanelId(5L);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals(5L, result.get(0).getPanel().getPanelId());
+        assertEquals(5L, result.get(1).getPanel().getPanelId());
+
+        verify(panelMappingRepository, times(1)).findByPanel_PanelId(5L);
+        verify(panelMappingRepository, never()).existsByPanel_PanelIdAndTest_TestId(anyLong(), anyLong());
     }
 
     @org.junit.jupiter.api.Test
-    void existsByPanel_PanelIdAndTest_TestId_detectsDuplicate() {
-        when(mappingRepository.existsByPanel_PanelIdAndTest_TestId(1L, 10L)).thenReturn(true);
-        boolean exists = mappingRepository.existsByPanel_PanelIdAndTest_TestId(1L, 10L);
+    void findByPanel_PanelId_shouldReturnEmptyList_whenNoMappings() {
+        when(panelMappingRepository.findByPanel_PanelId(999L)).thenReturn(List.of());
+
+        List<PanelMapping> result = panelMappingRepository.findByPanel_PanelId(999L);
+
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+
+        verify(panelMappingRepository).findByPanel_PanelId(999L);
+    }
+
+    @org.junit.jupiter.api.Test
+    void existsByPanel_PanelIdAndTest_TestId_shouldReturnTrue_whenMappingExists() {
+        when(panelMappingRepository.existsByPanel_PanelIdAndTest_TestId(5L, 11L))
+                .thenReturn(true);
+
+        boolean exists = panelMappingRepository.existsByPanel_PanelIdAndTest_TestId(5L, 11L);
+
         assertTrue(exists);
-        verify(mappingRepository, times(1)).existsByPanel_PanelIdAndTest_TestId(1L, 10L);
+        verify(panelMappingRepository).existsByPanel_PanelIdAndTest_TestId(5L, 11L);
+    }
+
+    @org.junit.jupiter.api.Test
+    void existsByPanel_PanelIdAndTest_TestId_shouldReturnFalse_whenMappingNotExists() {
+        when(panelMappingRepository.existsByPanel_PanelIdAndTest_TestId(5L, 99L))
+                .thenReturn(false);
+        boolean exists = panelMappingRepository.existsByPanel_PanelIdAndTest_TestId(5L, 99L);
+        assertFalse(exists);
+        verify(panelMappingRepository).existsByPanel_PanelIdAndTest_TestId(5L, 99L);
     }
 }
-
