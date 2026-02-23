@@ -2,10 +2,10 @@ package com.labconnect.controller;
 import com.labconnect.DTORequest.TestPanelRequest;
 import com.labconnect.DTORequest.TestParameterRequest;
 import com.labconnect.DTORequest.TestRequest;
-import com.labconnect.DTOResponse.PanelMappingResponse;
-import com.labconnect.DTOResponse.TestPanelResponse;
-import com.labconnect.DTOResponse.TestParameterResponse;
-import com.labconnect.DTOResponse.TestResponse;
+import com.labconnect.DTORespone.PanelMappingResponse;
+import com.labconnect.DTORespone.TestPanelResponse;
+import com.labconnect.DTORespone.TestParameterResponse;
+import com.labconnect.DTORespone.TestResponse;
 import com.labconnect.services.PanelMappingService;
 import com.labconnect.services.TestPanelService;
 import com.labconnect.services.TestParameterService;
@@ -50,7 +50,6 @@ public class TestCatalogController {
         return ResponseEntity.ok(testService.getActiveTests());
     }
 
-    //PARAMETER CONTROLLER
 // ---------- PARAMETERS ----------
     @PostMapping("/parameters")
     public ResponseEntity<TestParameterResponse> addParameter(@RequestBody TestParameterRequest parameter) {
@@ -99,7 +98,7 @@ public class TestCatalogController {
 
 
     //PANELMAPPING
-    // Get all mappings for a panel
+ 
     @GetMapping("/{panelId}/mappings")
     public ResponseEntity<List<PanelMappingResponse>> getMappingsByPanel(@PathVariable Long panelId) {
         return ResponseEntity.ok(panelMappingService.getMappingsByPanel(panelId));
