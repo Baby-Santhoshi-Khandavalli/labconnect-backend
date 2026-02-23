@@ -1,44 +1,46 @@
+
 package com.labconnect.mapper;
+
 import com.labconnect.DTORequest.TestParameterRequest;
-import com.labconnect.DTOResponse.TestParameterResponse;
+import com.labconnect.DTORespone.TestParameterResponse;
 import com.labconnect.Enum.Flag;
 import com.labconnect.models.Test;
 import com.labconnect.models.TestParameter;
-import com.labconnect.Enum.EnumUtil;   // <-- add this import
-import org.springframework.stereotype.Component;
+import org.mapstruct.*;
 
-@Component
-public class TestParameterMapper {
+@Mapper(componentModel = "spring")
+public interface TestParameterMapper {
+    @Mappings({
+            @Mapping(target = "parameterId", ignore = true),
+            @Mapping(target = "name", source = "req.name"),
+            @Mapping(target = "unit", source = "req.unit"),
+            @Mapping(target = "referenceRange", source = "req.referenceRange"),
+            @Mapping(target = "criticalRange", expression = "java(toFlag(req.getCriticalRange()))"),
+            @Mapping(target = "test", source = "test")
+    })
+    TestParameter toEntity(TestParameterRequest req, Test test);
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mappings({
+            @Mapping(target = "name", source = "req.name"),
+            @Mapping(target = "unit", source = "req.unit"),
+            @Mapping(target = "referenceRange", source = "req.referenceRange"),
+            @Mapping(target = "criticalRange", expression = "java(toFlag(req.getCriticalRange()))")
+            // NOTE: Relinking to another Test is handled in Service by setting entity.setTest(newTest) explicitly.
+    })
+    void updateEntity(TestParameterRequest req, @MappingTarget TestParameter entity);
 
-    public TestParameter toEntity(TestParameterRequest req, Test test) {
-        TestParameter tp = new TestParameter();
-        if (req.getName() != null) tp.setName(req.getName());
-        if (req.getUnit() != null) tp.setUnit(req.getUnit());
-        if (req.getReferenceRange() != null) tp.setReferenceRange(req.getReferenceRange());
-        if (req.getCriticalRange() != null) {
-            tp.setCriticalRange(EnumUtil.fromStringIgnoreCase(Flag.class, req.getCriticalRange()));
-        }
-        tp.setTest(test);
-        return tp;
+    @Mappings({
+            @Mapping(target = "parameterId", source = "parameterId"),
+            @Mapping(target = "name", source = "name"),
+            @Mapping(target = "unit", source = "unit"),
+            @Mapping(target = "referenceRange", source = "referenceRange"),
+            @Mapping(target = "criticalRange", expression = "java(fromFlag(entity.getCriticalRange()))"),
+            @Mapping(target = "testId", expression = "java(entity.getTest() == null ? null : entity.getTest().getTestId())")
+    })
+    TestParameterResponse toResponse(TestParameter entity);
+    default Flag toFlag(String value) {
+        if (value == null || value.isBlank()) return null;
+        return Flag.valueOf(value.trim().toUpperCase());
     }
-
-    public void updateEntity(TestParameterRequest req, TestParameter entity) {
-        if (req.getName() != null) entity.setName(req.getName());
-        if (req.getUnit() != null) entity.setUnit(req.getUnit());
-        if (req.getReferenceRange() != null) entity.setReferenceRange(req.getReferenceRange());
-        if (req.getCriticalRange() != null) {
-            entity.setCriticalRange(EnumUtil.fromStringIgnoreCase(Flag.class, req.getCriticalRange()));
-        }
-    }
-
-    public TestParameterResponse toResponse(TestParameter entity) {
-        TestParameterResponse resp = new TestParameterResponse();
-        resp.setParameterId(entity.getParameterId());
-        resp.setName(entity.getName());
-        resp.setUnit(entity.getUnit());
-        resp.setReferenceRange(entity.getReferenceRange());
-        resp.setCriticalRange(entity.getCriticalRange() == null ? null : entity.getCriticalRange().name());
-        resp.setTestId(entity.getTest() == null ? null : entity.getTest().getTestId());
-        return resp;
-    }
+    default String fromFlag(Flag e) { return e == null ? null : e.name(); }
 }
