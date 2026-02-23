@@ -1,5 +1,5 @@
 package com.labconnect.services;
-import com.labconnect.DTOResponse.TestResponse;
+import com.labconnect.DTORespone.TestResponse;
 import com.labconnect.Enum.Status;
 import com.labconnect.DTORequest.TestRequest;
 import com.labconnect.Exception.TestException;

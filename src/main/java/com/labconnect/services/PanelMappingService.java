@@ -1,6 +1,6 @@
 package com.labconnect.services;
 
-import com.labconnect.DTOResponse.PanelMappingResponse;
+import com.labconnect.DTORespone.PanelMappingResponse;
 import com.labconnect.mapper.PanelMappingMapper;
 import com.labconnect.models.PanelMapping;
 import com.labconnect.models.Test;
@@ -15,24 +15,27 @@ import java.util.List;
 
 @Service
 public class PanelMappingService {
+
     private final PanelMappingRepository mappingRepository;
     private final TestPanelRepository panelRepository;
     private final TestRepository testRepository;
+    private final PanelMappingMapper mapper; // <-- inject mapper
 
     public PanelMappingService(PanelMappingRepository mappingRepository,
                                TestPanelRepository panelRepository,
-                               TestRepository testRepository) {
+                               TestRepository testRepository,
+                               PanelMappingMapper mapper) {   // <-- add to constructor
         this.mappingRepository = mappingRepository;
         this.panelRepository = panelRepository;
         this.testRepository = testRepository;
+        this.mapper = mapper;
     }
 
     @Transactional(readOnly = true)
     public List<PanelMappingResponse> getMappingsByPanel(Long panelId) {
-        // Efficient: use a repository method instead of fetching all and filtering
         return mappingRepository.findByPanel_PanelId(panelId).stream()
-                .map(PanelMappingMapper::toResponse)
-                .toList();
+                .map(mapper::toResponse)          // <-- instance method, not static
+                .toList();                         // If you're on Java <16, use .collect(Collectors.toList())
     }
 
     @Transactional
@@ -50,7 +53,7 @@ public class PanelMappingService {
         mapping.setTest(test);
 
         PanelMapping saved = mappingRepository.save(mapping);
-        return PanelMappingMapper.toResponse(saved);
+        return mapper.toResponse(saved);           // <-- instance method
     }
 
     @Transactional
