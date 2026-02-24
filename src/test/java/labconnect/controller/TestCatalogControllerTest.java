@@ -1,4 +1,5 @@
 package com.labconnect.controller;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.labconnect.DTORequest.TestPanelRequest;
 import com.labconnect.DTORequest.TestParameterRequest;
@@ -12,13 +13,13 @@ import com.labconnect.services.PanelMappingService;
 import com.labconnect.services.TestPanelService;
 import com.labconnect.services.TestParameterService;
 import com.labconnect.services.TestService;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -30,34 +31,29 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@ExtendWith(MockitoExtension.class)
 class TestCatalogControllerTest {
 
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
 
-    @Mock private TestService testService;
+    @Mock private TestService testService;                     // class-based services (mocked)
     @Mock private TestParameterService parameterService;
     @Mock private TestPanelService panelService;
     @Mock private PanelMappingService panelMappingService;
 
     @InjectMocks
-    private TestCatalogController controller;
+    private TestCatalogController controller;                  // controller under test
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
         objectMapper = new ObjectMapper();
-
-        // Build MockMvc without starting Spring context
         mockMvc = MockMvcBuilders
                 .standaloneSetup(controller)
-                .setControllerAdvice(new GlobalExceptionHandler()) // if you have one
+                .setControllerAdvice(new GlobalExceptionHandler()) // for negative test
                 .build();
     }
 
@@ -82,7 +78,7 @@ class TestCatalogControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.testId", is(1)))
                 .andExpect(jsonPath("$.name", is("CBC")));
     }
@@ -103,6 +99,7 @@ class TestCatalogControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.testId", is(10)))
                 .andExpect(jsonPath("$.name", is("CBC - Updated")));
     }
@@ -117,6 +114,7 @@ class TestCatalogControllerTest {
 
         mockMvc.perform(get("/api/tests/tests/{id1}", 5L))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.testId", is(5)))
                 .andExpect(jsonPath("$.name", is("Lipid")));
     }
@@ -132,6 +130,7 @@ class TestCatalogControllerTest {
 
         mockMvc.perform(get("/api/tests/tests/active"))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is("CBC")))
                 .andExpect(jsonPath("$[1].name", is("LFT")));
@@ -159,6 +158,7 @@ class TestCatalogControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.parameterId", is(111)))
                 .andExpect(jsonPath("$.name", is("Hemoglobin")))
                 .andExpect(jsonPath("$.testId", is(1)));
@@ -176,6 +176,7 @@ class TestCatalogControllerTest {
 
         mockMvc.perform(get("/api/tests/parameters/bytest/{testId}", 10L))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is("Hb")))
                 .andExpect(jsonPath("$[1].name", is("RBC")));
@@ -191,6 +192,7 @@ class TestCatalogControllerTest {
 
         mockMvc.perform(get("/api/tests/parameters/search/{testId1}", 20L))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].parameterId", is(7)))
                 .andExpect(jsonPath("$[0].name", is("WBC")));
     }
@@ -210,6 +212,7 @@ class TestCatalogControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.parameterId", is(55)))
                 .andExpect(jsonPath("$.name", is("Platelets")));
     }
@@ -233,6 +236,7 @@ class TestCatalogControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.panelId", is(500)))
                 .andExpect(jsonPath("$.name", is("Renal Panel")))
                 .andExpect(jsonPath("$.testNames", hasSize(2)));
@@ -253,6 +257,7 @@ class TestCatalogControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.panelId", is(77)))
                 .andExpect(jsonPath("$.description", is("Updated desc")));
     }
@@ -270,6 +275,7 @@ class TestCatalogControllerTest {
 
         mockMvc.perform(get("/api/tests/panel"))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is("LFT")))
                 .andExpect(jsonPath("$[1].name", is("RFT")));
@@ -285,6 +291,7 @@ class TestCatalogControllerTest {
 
         mockMvc.perform(get("/api/tests/panel/{id}", 10L))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.panelId", is(10)))
                 .andExpect(jsonPath("$.name", is("Thyroid")));
     }
@@ -303,6 +310,7 @@ class TestCatalogControllerTest {
 
         mockMvc.perform(get("/api/tests/{panelId}/mappings", 5L))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].testName", is("ALT")));
     }
@@ -318,6 +326,7 @@ class TestCatalogControllerTest {
 
         mockMvc.perform(post("/api/tests/{panelId}/tests/{testId}", 5L, 11L))
                 .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.mappingId", is(200)))
                 .andExpect(jsonPath("$.panelId", is(5)))
                 .andExpect(jsonPath("$.testId", is(11)));
@@ -332,18 +341,15 @@ class TestCatalogControllerTest {
                 .andExpect(status().isNoContent());
     }
 
-//  /-------------------NEGATIVE TEST CASE------------------
+    // -------------------- NEGATIVE TEST --------------------
 
     @Test
     @DisplayName("GET /api/tests/tests/{id1} -> 404 when service throws RuntimeException")
     void getTestById_throws_returns404() throws Exception {
-        // Arrange: Service throws the exception you defined in TestService
         when(testService.getTestById(9999L)).thenThrow(new RuntimeException("Test not found"));
 
-        // Act & Assert: Now that GlobalExceptionHandler is registered, it returns 404
         mockMvc.perform(get("/api/tests/tests/{id1}", 9999L))
-                .andExpect(status().isNotFound()) // Expecting 404 Not Found
+                .andExpect(status().isNotFound())
                 .andExpect(content().string("Test not found"));
-
     }
 }
