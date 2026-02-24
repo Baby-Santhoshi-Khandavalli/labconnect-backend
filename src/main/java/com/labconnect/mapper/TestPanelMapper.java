@@ -1,7 +1,7 @@
 package com.labconnect.mapper;// package com.labconnect.mapper;
 
 import com.labconnect.DTORequest.TestPanelRequest;
-import com.labconnect.DTORespone.TestPanelResponse;
+import com.labconnect.DTOResponse.TestPanelResponse;
 import com.labconnect.models.PanelMapping;
 import com.labconnect.models.TestPanel;
 import org.mapstruct.*;

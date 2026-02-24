@@ -1,8 +1,7 @@
-
 package com.labconnect.mapper;
 import org.mapstruct.Mapping;
 import com.labconnect.DTORequest.TestRequest;
-import com.labconnect.DTORespone.TestResponse;
+import com.labconnect.DTOResponse.TestResponse;
 import com.labconnect.Enum.Department;
 import com.labconnect.Enum.Method;
 import com.labconnect.Enum.Status;

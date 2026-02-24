@@ -1,6 +1,6 @@
 package com.labconnect.mapper;
 
-import com.labconnect.DTORespone.PanelMappingResponse;
+import com.labconnect.DTOResponse.PanelMappingResponse;
 import com.labconnect.models.PanelMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -2,7 +2,7 @@
 package com.labconnect.mapper;
 
 import com.labconnect.DTORequest.TestParameterRequest;
-import com.labconnect.DTORespone.TestParameterResponse;
+import com.labconnect.DTOResponse.TestParameterResponse;
 import com.labconnect.Enum.Flag;
 import com.labconnect.models.Test;
 import com.labconnect.models.TestParameter;
