@@ -1,2 +1,3 @@
-server:
-  port: 7070
+spring:
+  profiles:
+    active: dev   # change to 'prod' when deploying to production
