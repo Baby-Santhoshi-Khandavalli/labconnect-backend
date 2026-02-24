@@ -1,6 +1,6 @@
 package com.labconnect.service;
 import com.labconnect.DTORequest.TestRequest;
-import com.labconnect.DTORespone.TestResponse;
+import com.labconnect.DTOResponse.TestResponse;
 import com.labconnect.Enum.Status;
 import com.labconnect.mapper.TestMapper;
 import com.labconnect.models.Test;
