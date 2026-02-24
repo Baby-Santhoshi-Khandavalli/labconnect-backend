@@ -1,7 +1,7 @@
 package com.labconnect.controller;
 
-import com.labconnect.dto.request.TestWorkflowRequestDTO;
-import com.labconnect.dto.response.TestWorkflowResponseDTO;
+import com.labconnect.DTORequest.TestWorkflowRequestDTO;
+import com.labconnect.DTOResponse.TestWorkflowResponseDTO;
 import com.labconnect.mapper.TestWorkflowMapper;
 import com.labconnect.models.TestWorkflow;
 import com.labconnect.services.TestWorkflowService;

@@ -1,7 +1,7 @@
 package com.labconnect.controller;
 
-import com.labconnect.dto.request.ComplianceRecordRequestDTO;
-import com.labconnect.dto.response.ComplianceRecordResponseDTO;
+import com.labconnect.DTORequest.ComplianceRecordRequestDTO;
+import com.labconnect.DTOResponse.ComplianceRecordResponseDTO;
 import com.labconnect.services.ComplianceRecordService;
 import org.springframework.web.bind.annotation.*;
 

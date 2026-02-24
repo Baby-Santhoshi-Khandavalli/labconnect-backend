@@ -1,4 +1,4 @@
-package labconnect.controller;
+package com.labconnect.controller;
 
 import com.labconnect.models.ResultAuthorization;
 import com.labconnect.models.TestResult;

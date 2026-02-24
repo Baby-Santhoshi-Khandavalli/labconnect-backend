@@ -2,7 +2,7 @@
 //
 //public class ResultServiceTest {
 //}
-package labconnect.services;
+package com.labconnect.service;
 
 import com.labconnect.models.TestResult;
 import com.labconnect.repository.ResultAuthorizationRepository;

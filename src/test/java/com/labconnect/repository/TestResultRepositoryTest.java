@@ -1,4 +1,4 @@
-package labconnect.repository;
+package com.labconnect.repository;
 import com.labconnect.Enum.Flag;
 import com.labconnect.models.Parameter;
 import com.labconnect.models.TestResult;

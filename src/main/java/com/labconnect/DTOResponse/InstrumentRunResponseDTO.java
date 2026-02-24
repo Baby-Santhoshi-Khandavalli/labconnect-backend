@@ -1,4 +1,4 @@
-package com.labconnect.dto.DTOResponse;
+package com.labconnect.DTOResponse;
 
 import com.labconnect.Enum.RunStatus;
 import lombok.Data;

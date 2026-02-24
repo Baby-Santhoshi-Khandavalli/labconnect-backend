@@ -1,7 +1,7 @@
 package com.labconnect.controller;
 
-import com.labconnect.dto.request.InstrumentRunRequestDTO;
-import com.labconnect.dto.response.InstrumentRunResponseDTO;
+import com.labconnect.DTORequest.InstrumentRunRequestDTO;
+import com.labconnect.DTOResponse.InstrumentRunResponseDTO;
 import com.labconnect.mapper.InstrumentRunMapper;
 import com.labconnect.models.InstrumentRun;
 import com.labconnect.services.InstrumentRunService;

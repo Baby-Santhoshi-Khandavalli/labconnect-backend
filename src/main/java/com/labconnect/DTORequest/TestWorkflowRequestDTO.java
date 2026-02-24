@@ -3,8 +3,8 @@ package com.labconnect.DTORequest;
 import com.labconnect.Enum.WorkflowStatus;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
 
+import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data

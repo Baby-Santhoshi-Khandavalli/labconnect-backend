@@ -1,4 +1,4 @@
-package labconnect.repository;
+package com.labconnect.repository;
 import com.labconnect.models.LabOrder;
 import com.labconnect.models.ResultAuthorization;
 import com.labconnect.models.TestResult;

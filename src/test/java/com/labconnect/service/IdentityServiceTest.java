@@ -1,4 +1,4 @@
-package com.labconnect.services;
+package com.labconnect.service;
 
 import com.labconnect.DTORequest.UserRequestDTO;
 import com.labconnect.DTOResponse.UserResponseDTO;

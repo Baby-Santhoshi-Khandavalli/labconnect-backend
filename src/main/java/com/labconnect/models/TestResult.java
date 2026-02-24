@@ -23,7 +23,7 @@ public class TestResult {
     // Relationship to Parameter (instead of just parameterId)
     @ManyToOne
     @JoinColumn(name = "parameter_id", nullable = false)
-    private Parameter parameter;
+    private TestParameter parameter;
 
     @Column(name = "res_value")
     private String value;
@@ -33,7 +33,6 @@ public class TestResult {
 
     private String enteredBy;
     private LocalDateTime enteredDate;
-
     // Optional: link to ResultAuthorization (one result can be authorized)
     @OneToOne(mappedBy = "testResult", cascade = CascadeType.ALL)
     private ResultAuthorization authorization;

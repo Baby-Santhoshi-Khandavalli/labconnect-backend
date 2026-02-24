@@ -1,4 +1,4 @@
-package labconnect.repository;
+package com.labconnect.repository;
 
 import com.labconnect.models.LabReport;
 import org.junit.jupiter.api.Assertions;

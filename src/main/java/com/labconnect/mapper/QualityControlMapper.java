@@ -1,7 +1,7 @@
 package com.labconnect.mapper;
 
-import com.labconnect.dto.request.QualityControlRequestDTO;
-import com.labconnect.dto.response.QualityControlResponseDTO;
+import com.labconnect.DTORequest.QualityControlRequestDTO;
+import com.labconnect.DTOResponse.QualityControlResponseDTO;
 import com.labconnect.models.QualityControl;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

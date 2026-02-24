@@ -22,7 +22,7 @@ public interface ResultAuthorizationMapper {
             @Mapping(source = "pathologistId", target = "pathologist_id"),
             @Mapping(source = "authorizedDate", target = "authorizedDate"),
             @Mapping(source = "remarks", target = "remarks"),
-            @Mapping(target = "testResult", ignore = true) // set if linking to a result
+            //@Mapping(target = "remarks", ignore = true) // set if linking to a result
     })
     ResultAuthorization toEntitySansRelations(ResultAuthorizationRequestDTO dto);
 }

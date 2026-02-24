@@ -1,7 +1,7 @@
 package com.labconnect.controller;
 
-import com.labconnect.dto.request.QualityControlRequestDTO;
-import com.labconnect.dto.response.QualityControlResponseDTO;
+import com.labconnect.DTORequest.QualityControlRequestDTO;
+import com.labconnect.DTOResponse.QualityControlResponseDTO;
 import com.labconnect.mapper.QualityControlMapper;
 import com.labconnect.models.QualityControl;
 import com.labconnect.services.QualityControlService;

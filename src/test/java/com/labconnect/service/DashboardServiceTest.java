@@ -1,5 +1,5 @@
 
-package labconnect.services;
+package com.labconnect.service;
 
 import com.labconnect.models.LabReport;
 import com.labconnect.repository.LabReportRepository;

@@ -1,7 +1,7 @@
 package com.labconnect.mapper;
 
-import com.labconnect.dto.request.ComplianceRecordRequestDTO;
-import com.labconnect.dto.response.ComplianceRecordResponseDTO;
+import com.labconnect.DTORequest.ComplianceRecordRequestDTO;
+import com.labconnect.DTOResponse.ComplianceRecordResponseDTO;
 import com.labconnect.models.ComplianceRecord;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
