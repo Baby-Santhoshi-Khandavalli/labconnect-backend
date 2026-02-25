@@ -23,7 +23,7 @@ public class Specimen {
     private SpecimenType specimenType;
 
     private LocalDateTime collectedDate;
-  private Long collectorId;
+  //private Long collectorId;
 
     @Enumerated(EnumType.STRING)
     private SpecimenStatus status;

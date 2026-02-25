@@ -29,7 +29,7 @@ public class OrderSpecimenService {
 
     @Transactional
     public LabOrder createOrder(LabOrder order) {
-        if (order.getPatientId() == null || order.getClinicianId() == null || order.getPriority() == null) {
+        if (order.getPatientId() == null || order.getClinician() == null || order.getPriority() == null) {
             throw new BadRequestException("Missing required fields: patientId/clinicianId/priority");
         }
         if (order.getOrderDate() == null) {
@@ -65,8 +65,10 @@ public class OrderSpecimenService {
 
     @Transactional
     public Specimen createSpecimen(Specimen specimen) {
+//        if (specimen.getOrder() == null || specimen.getSpecimenType() == null ||
+//                specimen.getCollectedDate() == null || specimen.getCollectorId() == null) {
         if (specimen.getOrder() == null || specimen.getSpecimenType() == null ||
-                specimen.getCollectedDate() == null || specimen.getCollectorId() == null) {
+                specimen.getCollectedDate() == null || specimen.getCollector() == null){
             throw new BadRequestException("Missing required fields for specimen");
         }
         if (specimen.getBarcodeValue() == null) {
