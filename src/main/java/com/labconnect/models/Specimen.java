@@ -23,14 +23,15 @@ public class Specimen {
     private SpecimenType specimenType;
 
     private LocalDateTime collectedDate;
-    private Long collectorId;
+//    private Long collectorId;
 
     @Enumerated(EnumType.STRING)
     private SpecimenStatus status;
 
     private String barcodeValue;
     private String labelText;
-
+    @ManyToOne @JoinColumn(name="collectorId")
+    private User collector;
     @Embedded
     private Auditable audit = new Auditable();
 

@@ -17,7 +17,7 @@ public class TestParameter {
     @Enumerated(EnumType.STRING)
     private Flag criticalRange;
     @ManyToOne
-    @JoinColumn(name = "testId", nullable = false)
+    @JoinColumn(name = "testId", nullable = false) //_id check this
     private Test test;
 
 }

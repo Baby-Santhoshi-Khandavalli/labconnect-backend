@@ -14,10 +14,12 @@ public class ResultAuthorization {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long authorizationId;
 
-    @ManyToOne
+    @ManyToOne //onetoone
     @JoinColumn(name = "order_id", nullable = false)
     private LabOrder order;   // your domain Order entity
 
+    @ManyToOne @JoinColumn(name="pathologist_id")
+    private User pathologist;
     private Long pathologist_id;   // your domain Pathologist entity
 
     private LocalDateTime authorizedDate;

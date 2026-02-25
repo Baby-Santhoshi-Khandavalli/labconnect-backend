@@ -31,9 +31,11 @@ public class TestResult {
     @Enumerated(EnumType.STRING)
     private Flag flag;   // Normal / High / Low / Critical
 
-    private String enteredBy;
+   // private String enteredBy; check which is working line 39 or this
     private LocalDateTime enteredDate;
     // Optional: link to ResultAuthorization (one result can be authorized)
     @OneToOne(mappedBy = "testResult", cascade = CascadeType.ALL)
     private ResultAuthorization authorization;
+    @ManyToOne @JoinColumn(name="enteredBy")
+    private User enteredBy;
 }

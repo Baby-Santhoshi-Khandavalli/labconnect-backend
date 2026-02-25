@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,7 +32,15 @@ public class LabOrder {
     private Set<Long> testIds = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Specimen> specimens = new LinkedHashSet<>();
+    private Set<Specimen> specimens = new LinkedHashSet<>(); //List
+    @ManyToOne @JoinColumn(name="clinicianId")
+    private User clinician;
+    //
+    @OneToMany(mappedBy="order")
+    private List<TestWorkflow> workflows;
+    //
+    @OneToOne(mappedBy = "order")
+    private ResultAuthorization authorization;
 
     @Embedded
     private Auditable audit = new Auditable();

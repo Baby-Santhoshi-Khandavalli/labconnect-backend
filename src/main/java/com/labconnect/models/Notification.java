@@ -28,4 +28,8 @@ public class Notification {
 
     public enum Category { Critical, Delay, QC }
     public enum Status { Unread, Read, Dismissed }
+    //
+    @ManyToOne
+    @JoinColumn(name="userid")
+    private User user;
 }

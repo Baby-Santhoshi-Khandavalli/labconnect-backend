@@ -34,6 +34,9 @@ public class TestWorkflow {
 //    @OneToMany(mappedBy = "workflow", cascade = CascadeType.ALL)
 //    private List<TestResult> results;
 
+
+    @ManyToOne @JoinColumn(name="AssignedTo")
+    private User assignee; //what table
     @OneToMany(mappedBy = "workflow")
     private List<TestResult> results;
 

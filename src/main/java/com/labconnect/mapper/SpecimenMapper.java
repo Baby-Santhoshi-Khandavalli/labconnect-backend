@@ -21,7 +21,7 @@ public interface SpecimenMapper {
     @Mapping(source = "order",                 target = "order")
     @Mapping(source = "request.specimenType",  target = "specimenType")
     @Mapping(source = "request.collectedDate", target = "collectedDate")
-    @Mapping(source = "request.collectorId",   target = "collectorId")
+   @Mapping(source = "request.collectorId",   target = "collectorId")
     @Mapping(target = "status",      constant = "Collected") // or use 'ignore = true' and set in service
     @Mapping(target = "barcodeValue", ignore = true)
     @Mapping(target = "labelText",    ignore = true)
