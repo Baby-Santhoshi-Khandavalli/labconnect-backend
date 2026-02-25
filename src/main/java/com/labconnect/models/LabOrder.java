@@ -36,7 +36,7 @@ public class LabOrder {
     @ManyToOne @JoinColumn(name="clinicianId")
     private User clinician;
     //
-    @OneToMany(mappedBy="order")
+    @OneToMany(mappedBy="labOrder") //order to labOrder
     private List<TestWorkflow> workflows;
     //
     @OneToOne(mappedBy = "order")

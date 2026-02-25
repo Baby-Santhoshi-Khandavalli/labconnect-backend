@@ -23,13 +23,14 @@ public class Specimen {
     private SpecimenType specimenType;
 
     private LocalDateTime collectedDate;
-//    private Long collectorId;
+  private Long collectorId;
 
     @Enumerated(EnumType.STRING)
     private SpecimenStatus status;
 
     private String barcodeValue;
     private String labelText;
+    //this line Collector error
     @ManyToOne @JoinColumn(name="collectorId")
     private User collector;
     @Embedded

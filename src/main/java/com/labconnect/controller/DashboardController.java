@@ -17,13 +17,12 @@ public class DashboardController {
         this.dashboardService = dashboardService;
     }
 
-    // ✅ Get all reports
     @GetMapping("/reports")
     public List<LabReport> getAllReports() {
         return dashboardService.getAllReports();
     }
 
-    // ✅ Get report by ID
+
     @GetMapping("/reports/{id}")
     public ResponseEntity<LabReport> getReportById(@PathVariable Long id) {
         return dashboardService.getReportById(id)

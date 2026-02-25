@@ -1,5 +1,6 @@
 package com.labconnect.DTOResponse;
 
+import com.labconnect.models.User;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ public class TestResultResponseDTO {
     private Long parameterId;
     private String value;
     private String flag;
-    private String enteredBy;
+    //from 1st string then user now Long
+    private Long enteredBy;
     private LocalDateTime enteredDate;
 }

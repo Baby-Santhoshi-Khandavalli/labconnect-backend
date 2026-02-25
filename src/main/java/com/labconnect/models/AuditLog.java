@@ -12,9 +12,9 @@ public class AuditLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long auditId;
-
+ /// user_id changed the name if _ then error
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="userid")
     private User user;
     private String action;
     private String resource;

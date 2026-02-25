@@ -16,7 +16,7 @@ public interface TestResultMapper {
             @Mapping(source = "parameter.parameterId", target = "parameterId"),
             @Mapping(source = "value", target = "value"),
             @Mapping(source = "flag", target = "flag", qualifiedByName = "flagToString"),
-            @Mapping(source = "enteredBy", target = "enteredBy"),
+            @Mapping(source = "enteredBy.userId", target = "enteredBy"),
             @Mapping(source = "enteredDate", target = "enteredDate")
     })
     TestResultResponseDTO toResponseDTO(TestResult entity);
@@ -27,7 +27,9 @@ public interface TestResultMapper {
             @Mapping(target = "parameter", ignore = true),
             @Mapping(source = "value", target = "value"),
             @Mapping(source = "flag", target = "flag", qualifiedByName = "stringToFlag"),
-            @Mapping(source = "enteredBy", target = "enteredBy"),
+            //@Mapping(source = "enteredBy", target = "enteredBy"),
+            @Mapping(target = "enteredBy",ignore = true),
+
             @Mapping(source = "enteredDate", target = "enteredDate"),
             @Mapping(target = "authorization", ignore = true)
     })

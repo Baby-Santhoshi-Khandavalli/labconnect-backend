@@ -13,7 +13,8 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long notificationId;
-
+    //
+    @Column(name = "userid", insertable = false, updatable = false)
     private Long userId;
 
     private String message;

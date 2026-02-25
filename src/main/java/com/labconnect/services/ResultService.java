@@ -1,13 +1,18 @@
 package com.labconnect.services;
-
+import com.labconnect.DTORequest.TestResultRequestDTO;
+import com.labconnect.DTOResponse.TestResultResponseDTO;
+import com.labconnect.Enum.Flag;
 import com.labconnect.models.ResultAuthorization;
 import com.labconnect.models.TestResult;
 import com.labconnect.repository.ResultAuthorizationRepository;
 import com.labconnect.repository.TestResultRepository;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
+import org.mapstruct.Named;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 public class ResultService {
 
@@ -19,7 +24,6 @@ public class ResultService {
         this.testResultRepo = testResultRepo;
         this.authorizationRepo = authorizationRepo;
     }
-
     // --- TestResult methods ---
     public List<TestResult> getAllTestResults() {
         return testResultRepo.findAll();

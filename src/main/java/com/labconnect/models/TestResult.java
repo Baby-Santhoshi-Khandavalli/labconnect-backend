@@ -36,6 +36,8 @@ public class TestResult {
     // Optional: link to ResultAuthorization (one result can be authorized)
     @OneToOne(mappedBy = "testResult", cascade = CascadeType.ALL)
     private ResultAuthorization authorization;
-    @ManyToOne @JoinColumn(name="enteredBy")
+    @ManyToOne
+    @JoinColumn(name="enteredBy")
+    //private String enteredBy; //
     private User enteredBy;
 }

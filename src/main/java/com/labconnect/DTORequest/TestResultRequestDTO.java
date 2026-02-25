@@ -11,6 +11,7 @@ public class TestResultRequestDTO {
     private Long parameterId;
     private String value;
     private String flag;       // Normal / High / Low / Critical
-    private String enteredBy;
+//    private String enteredBy;
+    private Long enteredBy;
     private LocalDateTime enteredDate;
 }
