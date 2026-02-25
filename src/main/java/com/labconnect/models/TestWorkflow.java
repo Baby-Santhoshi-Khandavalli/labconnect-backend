@@ -16,8 +16,8 @@ public class TestWorkflow {
     private Long workflowID;
 
     @ManyToOne
-    @JoinColumn(name = "OrderID")
-    private LabOrder labOrder;   //Reference to LabOrder
+    @JoinColumn(name = "order_id")
+    private LabOrder order; //Reference to LabOrder
     @ManyToOne
     @JoinColumn(name = "testId")
     private Test test;    //Reference to Test
@@ -25,7 +25,7 @@ public class TestWorkflow {
     @Enumerated(EnumType.STRING)
     private WorkflowStatus status;
 
-    private String AssignedTo;
+//    private String AssignedTo;
 
     private LocalDateTime StartTime;
 

@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface TestWorkflowRepository extends JpaRepository<TestWorkflow, Long> {
     List<TestWorkflow> findByStatus(WorkflowStatus status);
-    List<TestWorkflow> findByLabOrder_OrderId(Long orderId);
-    List<TestWorkflow> findByTest_TestId(Long testId);
+
+    List<TestWorkflow> findByOrderOrderId(Long orderId);
+
+    List<TestWorkflow> findByTestTestId(Long testId);
 }

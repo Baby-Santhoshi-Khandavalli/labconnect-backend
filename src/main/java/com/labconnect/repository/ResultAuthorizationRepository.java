@@ -9,10 +9,9 @@ import java.util.List;
 @Repository
 public interface ResultAuthorizationRepository extends JpaRepository<ResultAuthorization, Long> {
 
-    // Custom finder methods
-    List<ResultAuthorization> findByOrderId(Long orderId);
+    List<ResultAuthorization> findByOrderOrderId(Long orderId);
 
-    List<ResultAuthorization> findByPathologistId(Long pathologistId);
+    List<ResultAuthorization> findByPathologistUserId(Long userId);
 
     List<ResultAuthorization> findByAuthorizedDateBetween(
             java.time.LocalDateTime start,
