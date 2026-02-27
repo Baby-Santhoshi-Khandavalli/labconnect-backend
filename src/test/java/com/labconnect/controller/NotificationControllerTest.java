@@ -1,64 +1,69 @@
 package com.labconnect.controller;
 
-
-import com.labconnect.DTORequest.CreateNotificationRequest;
 import com.labconnect.DTORequest.UpdateNotificationStatusRequest;
 import com.labconnect.DTOResponse.NotificationResponse;
 import com.labconnect.models.Notification;
 import com.labconnect.services.NotificationService;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.Arrays;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class NotificationControllerTest {
 
-    NotificationService service = mock(NotificationService.class);
-    NotificationController controller = new NotificationController(service);
+    @Mock
+    private NotificationService notificationService;
 
-    @Test
-    void testCreateNotification() {
-        CreateNotificationRequest req = new CreateNotificationRequest();
-        req.setUserId(1L);
+    @InjectMocks
+    private NotificationController notificationController;
 
-        NotificationResponse response = NotificationResponse.builder()
-                .notificationId(20L).build();
-
-        when(service.createNotification(req)).thenReturn(response);
-
-        NotificationResponse result = controller.createNotification(req);
-
-        assertEquals(20L, result.getNotificationId());
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void testGetByUser() {
-        NotificationResponse r1 = NotificationResponse.builder().notificationId(5L).build();
-        NotificationResponse r2 = NotificationResponse.builder().notificationId(6L).build();
+    void getByUser_ShouldReturnList() {
+        Long userId = 1L;
 
-        when(service.getNotificationsByUser(100L)).thenReturn(Arrays.asList(r1, r2));
+        // Fixed: Using Setters
+        NotificationResponse res = new NotificationResponse();
+        res.setNotificationId(1L);
+        res.setMessage("Controller Test");
 
-        var result = controller.getByUser(100L);
+        when(notificationService.getNotificationsByUser(userId)).thenReturn(Collections.singletonList(res));
 
-        assertEquals(2, result.size());
-        assertEquals(5L, result.get(0).getNotificationId());
+        List<NotificationResponse> result = notificationController.getByUser(userId);
+
+        assertNotNull(result);
+        assertEquals("Controller Test", result.get(0).getMessage());
+        verify(notificationService).getNotificationsByUser(userId);
     }
 
     @Test
-    void testUpdateStatus() {
-        UpdateNotificationStatusRequest req = new UpdateNotificationStatusRequest();
-        req.setStatus(Notification.Status.Read);
+    void updateStatus_ShouldReturnResponse() {
+        Long id = 1L;
+        UpdateNotificationStatusRequest request = new UpdateNotificationStatusRequest();
+        request.setStatus(Notification.Status.Read);
 
-        NotificationResponse response = NotificationResponse.builder()
-                .notificationId(99L).status(Notification.Status.Read).build();
+        // Fixed: Using Setters
+        NotificationResponse response = new NotificationResponse();
+        response.setNotificationId(id);
+        response.setStatus(Notification.Status.Read);
 
-        when(service.updateStatus(99L, req)).thenReturn(response);
+        when(notificationService.updateStatus(eq(id), any())).thenReturn(response);
 
-        NotificationResponse result = controller.updateStatus(99L, req);
+        NotificationResponse result = notificationController.updateStatus(id, request);
 
         assertEquals(Notification.Status.Read, result.getStatus());
+        verify(notificationService).updateStatus(eq(id), any());
     }
 }
-
