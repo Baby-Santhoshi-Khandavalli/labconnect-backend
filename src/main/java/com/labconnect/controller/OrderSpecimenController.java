@@ -14,6 +14,7 @@ import com.labconnect.models.Specimen;
 import com.labconnect.services.OrderSpecimenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class OrderSpecimenController {
     // ===== LabOrder Endpoints =====
 
     @PostMapping("/orders")
+    @PreAuthorize("hasRole('Clinician')") // Only Clinicians can order tests
     public LabOrderResponse createOrder(@RequestBody CreateOrderRequest request) {
         LabOrder order = labOrderMapper.toEntity(request);
         LabOrder saved = orderSpecimenService.createOrder(order);

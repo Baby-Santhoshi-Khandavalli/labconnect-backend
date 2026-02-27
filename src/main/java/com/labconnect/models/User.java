@@ -25,7 +25,7 @@ public class User {
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private List<AuditLog> auditLogs;
 ///
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Notification> notifications;
 //
 //    @OneToMany(mappedBy = "clinician",fetch = FetchType.EAGER)

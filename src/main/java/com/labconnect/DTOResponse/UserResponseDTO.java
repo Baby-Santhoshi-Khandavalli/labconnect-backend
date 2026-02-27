@@ -2,6 +2,8 @@ package com.labconnect.DTOResponse;
 import com.labconnect.models.User.Role;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class UserResponseDTO {
     private Long userId;
@@ -9,4 +11,5 @@ public class UserResponseDTO {
     private Role role;
     private String email;
     private String phone;
+    private List<NotificationResponse> notifications;
 }

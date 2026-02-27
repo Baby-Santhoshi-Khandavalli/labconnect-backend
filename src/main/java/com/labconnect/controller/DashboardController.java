@@ -30,13 +30,13 @@ public class DashboardController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // ✅ Create new report
+
     @PostMapping("/reports")
     public LabReport createReport(@RequestBody LabReport report) {
         return dashboardService.createReport(report);
     }
 
-    // ✅ Update existing report
+
     @PutMapping("/reports/{id}")
     public ResponseEntity<LabReport> updateReport(@PathVariable Long id,
                                                   @RequestBody LabReport updatedReport) {
@@ -45,7 +45,7 @@ public class DashboardController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // ✅ Delete report
+
     @DeleteMapping("/reports/{id}")
     public ResponseEntity<Void> deleteReport(@PathVariable Long id) {
         dashboardService.deleteReport(id);
