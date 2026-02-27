@@ -18,7 +18,7 @@ public class InstrumentRun {
     @JoinColumn(name = "testId")
     private Test test;  //Reference to Test
 
-    private String InstrumentName;
+    private String instrumentName;
 
     private Date RunDate;
     @Enumerated(EnumType.STRING)

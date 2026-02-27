@@ -8,11 +8,12 @@ import com.labconnect.models.Notification;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+
 @Mapper(componentModel = "spring")
 public interface NotificationMapper {
 
     @Mapping(target = "notificationId", ignore = true)
-    @Mapping(source = "userId",   target = "userId")
+    @Mapping(source = "userId",   target = "user.userId")
     @Mapping(source = "message",  target = "message")
     @Mapping(source = "category", target = "category")
     @Mapping(target = "status",       constant = "Unread")
@@ -20,7 +21,7 @@ public interface NotificationMapper {
     Notification mapToNotificationEntity(CreateNotificationRequest request);
 
     @Mapping(source = "notificationId", target = "notificationId")
-    @Mapping(source = "userId",         target = "userId")
+    @Mapping(source = "user.userId",         target = "userId")
     @Mapping(source = "message",        target = "message")
     @Mapping(source = "category",       target = "category")
     @Mapping(source = "status",         target = "status")
