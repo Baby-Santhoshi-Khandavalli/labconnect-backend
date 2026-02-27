@@ -7,7 +7,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
+//@Builder
 public class NotificationResponse {
     private Long notificationId;
     private Long userId;

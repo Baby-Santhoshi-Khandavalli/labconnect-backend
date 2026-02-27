@@ -14,8 +14,8 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long notificationId;
     //
-    @Column(name = "userid", insertable = false, updatable = false)
-    private Long userId;
+    //@Column(name = "userid", insertable = false, updatable = false)
+    //private Long userId;
 
     private String message;
 
@@ -30,7 +30,7 @@ public class Notification {
     public enum Category { Critical, Delay, QC }
     public enum Status { Unread, Read, Dismissed }
     //
-    @ManyToOne
-    @JoinColumn(name="userid")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
     private User user;
 }

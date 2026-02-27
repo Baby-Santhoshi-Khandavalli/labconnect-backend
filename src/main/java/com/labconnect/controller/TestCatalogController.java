@@ -12,6 +12,7 @@ import com.labconnect.services.TestParameterService;
 import com.labconnect.services.TestService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -31,11 +32,13 @@ public class TestCatalogController {
     }
 
     @PostMapping("/tests")
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<TestResponse> createTest(@RequestBody TestRequest request) {
         return new ResponseEntity<>(testService.createTest(request), HttpStatus.CREATED);
     }
 
     @PutMapping("/tests/change/{id}")
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<TestResponse> updateTest(@PathVariable Long id, @RequestBody TestRequest request) {
         return ResponseEntity.ok(testService.updateTest(id, request));
     }
@@ -46,6 +49,7 @@ public class TestCatalogController {
     }
 
     @GetMapping("/tests/active")
+    @PreAuthorize("hasAnyRole('Clinician','Technician')")
     public ResponseEntity<List<TestResponse>> getActiveTests() {
         return ResponseEntity.ok(testService.getActiveTests());
     }
@@ -74,6 +78,7 @@ public class TestCatalogController {
 
     //TESTPANEL
     @PostMapping("/panel")
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<TestPanelResponse> createPanel(@RequestBody TestPanelRequest request) {
         TestPanelResponse created = panelService.createPanel(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);

@@ -47,7 +47,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/api/identity/login").permitAll()
-                        .requestMatchers("/api/identity/users/**").permitAll()
+                        .requestMatchers("/api/identity/audit/*").permitAll()
+                        .requestMatchers("/api/notifications/*").permitAll()
+                        //.requestMatchers("/api/identity/users/**").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/identity/users").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -1,9 +1,12 @@
 package com.labconnect.mapper;
 
+import com.labconnect.DTORequest.UpdateNotificationStatusRequest;
 import com.labconnect.DTORequest.UserRequestDTO;
 import com.labconnect.DTOResponse.AuditLogDTO;
+import com.labconnect.DTOResponse.NotificationResponse;
 import com.labconnect.DTOResponse.UserResponseDTO;
 import com.labconnect.models.AuditLog;
+import com.labconnect.models.Notification;
 import com.labconnect.models.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -18,4 +21,12 @@ public interface IdentityMapper {
     User mapToUserEntity(UserRequestDTO userRequestDTO);
 
     AuditLogDTO mapToAuditLogDTO(AuditLog auditLog);
+
+    @Mapping(target = "userId",source = "user.userId")
+    NotificationResponse mapToNotificationResponse(Notification notification);
+
+    @Mapping(target = "notificationId", ignore = true)
+    @Mapping(target = "user", ignore = true) // Handled in Service layer
+    @Mapping(target = "createdDate", expression = "java(java.time.LocalDateTime.now())")
+    Notification mapToNotificationEntity(UpdateNotificationStatusRequest request);
 }
