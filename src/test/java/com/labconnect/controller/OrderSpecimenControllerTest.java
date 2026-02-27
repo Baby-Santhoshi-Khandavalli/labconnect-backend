@@ -200,15 +200,193 @@
 //        req.setStatus(null);
 //        assertThrows(BadRequestException.class, () -> orderSpecimenController.updateSpecimenStatus(1L, req));
 //        verify(orderSpecimenService, never()).updateSpecimenStatus(anyLong(), any()); }}
+//package com.labconnect.controller;
+//
+//import com.labconnect.DTORequest.CreateOrderRequest;
+//import com.labconnect.DTORequest.CreateSpecimenRequest;
+//import com.labconnect.DTORequest.UpdateOrderStatusRequest;
+//import com.labconnect.DTORequest.UpdateSpecimenStatusRequest;
+//import com.labconnect.DTOResponse.LabOrderResponse;
+//import com.labconnect.DTOResponse.SpecimenResponse;
+//import com.labconnect.Exception.BadRequestException;
+//import com.labconnect.mapper.LabOrderMapper;
+//import com.labconnect.mapper.SpecimenMapper;
+//import com.labconnect.models.LabOrder;
+//import com.labconnect.models.Specimen;
+//import com.labconnect.services.OrderSpecimenService;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
+//import org.mockito.InjectMocks;
+//import org.mockito.Mock;
+//import org.mockito.MockitoAnnotations;
+//
+//import java.time.LocalDateTime;
+//import java.util.List;
+//import java.util.Set;
+//
+//import static org.junit.jupiter.api.Assertions.*;
+//import static org.mockito.Mockito.*;
+//
+//public class OrderSpecimenControllerTest {
+//
+//    @Mock
+//    private OrderSpecimenService orderSpecimenService;
+//
+//    @Mock
+//    private LabOrderMapper labOrderMapper;
+//
+//    @Mock
+//    private SpecimenMapper specimenMapper;
+//
+//    @InjectMocks
+//    private OrderSpecimenController orderSpecimenController;
+//
+//    @BeforeEach
+//    void setUp() {
+//        MockitoAnnotations.openMocks(this);
+//    }
+//
+//    // --- Helper Builders ---
+//
+//    private CreateOrderRequest buildCreateOrderRequest() {
+//        CreateOrderRequest req = new CreateOrderRequest();
+//        req.setPatientId(1L);
+//        req.setClinicianId(2L);
+//        req.setPriority(LabOrder.Priority.Routine);
+//        req.setTestIds(Set.of(101L));
+//        return req;
+//    }
+//
+//    private LabOrder buildOrderEntity(Long id) {
+//        LabOrder order = new LabOrder();
+//        order.setOrderId(id);
+//        order.setPatientId(1L);
+//        order.setStatus(LabOrder.OrderStatus.Ordered);
+//        return order;
+//    }
+//
+//    private LabOrderResponse buildOrderResponse(Long id) {
+//        return LabOrderResponse.builder()
+//                .orderId(id)
+//                .status(LabOrder.OrderStatus.Ordered)
+//                .build();
+//    }
+//
+//    // --- LabOrder Tests ---
+//
+//    @Test
+//    void createOrder_ShouldReturnSavedOrder() {
+//        CreateOrderRequest req = buildCreateOrderRequest();
+//        LabOrder entity = buildOrderEntity(null);
+//        LabOrder saved = buildOrderEntity(100L);
+//        LabOrderResponse resp = buildOrderResponse(100L);
+//
+//        when(labOrderMapper.toEntity(req)).thenReturn(entity);
+//        when(orderSpecimenService.createOrder(entity)).thenReturn(saved);
+//        when(labOrderMapper.toResponse(saved)).thenReturn(resp);
+//
+//        LabOrderResponse result = orderSpecimenController.createOrder(req);
+//
+//        assertNotNull(result);
+//        assertEquals(100L, result.getOrderId());
+//        verify(orderSpecimenService).createOrder(entity);
+//    }
+//
+//    @Test
+//    void getOrders_ShouldReturnList() {
+//        LabOrder o1 = buildOrderEntity(1L);
+//        LabOrder o2 = buildOrderEntity(2L);
+//        when(orderSpecimenService.getOrders()).thenReturn(List.of(o1, o2));
+//        when(labOrderMapper.toResponse(any())).thenReturn(buildOrderResponse(1L));
+//
+//        List<LabOrderResponse> result = orderSpecimenController.getOrders();
+//
+//        assertEquals(2, result.size());
+//        verify(labOrderMapper, times(2)).toResponse(any());
+//    }
+//
+//    @Test
+//    void updateOrderStatus_ShouldUpdateWhenStatusPresent() {
+//        UpdateOrderStatusRequest req = new UpdateOrderStatusRequest();
+//        req.setStatus(LabOrder.OrderStatus.InProgress);
+//        LabOrder updated = buildOrderEntity(1L);
+//        updated.setStatus(LabOrder.OrderStatus.InProgress);
+//
+//        when(orderSpecimenService.updateOrderStatus(1L, req.getStatus())).thenReturn(updated);
+//        when(labOrderMapper.toResponse(updated)).thenReturn(buildOrderResponse(1L));
+//
+//        LabOrderResponse result = orderSpecimenController.updateOrderStatus(1L, req);
+//
+//        assertNotNull(result);
+//        verify(orderSpecimenService).updateOrderStatus(1L, LabOrder.OrderStatus.InProgress);
+//    }
+//
+//    @Test
+//    void updateOrderStatus_ShouldThrowBadRequest_WhenStatusNull() {
+//        UpdateOrderStatusRequest req = new UpdateOrderStatusRequest();
+//        req.setStatus(null);
+//
+//        assertThrows(BadRequestException.class, () -> orderSpecimenController.updateOrderStatus(1L, req));
+//        verifyNoInteractions(orderSpecimenService);
+//    }
+//
+//    // --- Specimen Tests ---
+//
+//    @Test
+//    void createSpecimen_ShouldReturnSavedSpecimen() {
+//        Long orderId = 1L;
+//        CreateSpecimenRequest req = new CreateSpecimenRequest();
+//        req.setSpecimenType(Specimen.SpecimenType.Blood);
+//
+//        LabOrder order = buildOrderEntity(orderId);
+//        Specimen entity = new Specimen();
+//        Specimen saved = new Specimen();
+//        saved.setSpecimenId(50L);
+//        SpecimenResponse resp = SpecimenResponse.builder().specimenId(50L).build();
+//
+//        when(orderSpecimenService.getOrderById(orderId)).thenReturn(order);
+//        when(specimenMapper.toEntity(req, order)).thenReturn(entity);
+//        when(orderSpecimenService.createSpecimen(entity)).thenReturn(saved);
+//        when(specimenMapper.toResponse(saved)).thenReturn(resp);
+//
+//        SpecimenResponse result = orderSpecimenController.createSpecimen(orderId, req);
+//
+//        assertNotNull(result);
+//        assertEquals(50L, result.getSpecimenId());
+//        verify(orderSpecimenService).getOrderById(orderId);
+//        verify(orderSpecimenService).createSpecimen(entity);
+//    }
+//
+//    @Test
+//    void getSpecimensByOrder_ShouldReturnList() {
+//        Long orderId = 1L;
+//        Specimen s1 = new Specimen();
+//        when(orderSpecimenService.getSpecimensByOrder(orderId)).thenReturn(List.of(s1));
+//        when(specimenMapper.toResponse(s1)).thenReturn(SpecimenResponse.builder().build());
+//
+//        List<SpecimenResponse> result = orderSpecimenController.getSpecimensByOrder(orderId);
+//
+//        assertEquals(1, result.size());
+//        verify(orderSpecimenService).getSpecimensByOrder(orderId);
+//    }
+//
+//    @Test
+//    void updateSpecimenStatus_ShouldThrowBadRequest_WhenStatusNull() {
+//        UpdateSpecimenStatusRequest req = new UpdateSpecimenStatusRequest();
+//        req.setStatus(null);
+//
+//        assertThrows(BadRequestException.class, () -> orderSpecimenController.updateSpecimenStatus(1L, req));
+//        verify(orderSpecimenService, never()).updateSpecimenStatus(anyLong(), any());
+//    }
+//}
 package com.labconnect.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.labconnect.DTORequest.CreateOrderRequest;
 import com.labconnect.DTORequest.CreateSpecimenRequest;
-import com.labconnect.DTORequest.UpdateOrderStatusRequest;
-import com.labconnect.DTORequest.UpdateSpecimenStatusRequest;
 import com.labconnect.DTOResponse.LabOrderResponse;
 import com.labconnect.DTOResponse.SpecimenResponse;
-import com.labconnect.Exception.BadRequestException;
 import com.labconnect.mapper.LabOrderMapper;
 import com.labconnect.mapper.SpecimenMapper;
 import com.labconnect.models.LabOrder;
@@ -216,18 +394,29 @@ import com.labconnect.models.Specimen;
 import com.labconnect.services.OrderSpecimenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
+import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ExtendWith(MockitoExtension.class)
 public class OrderSpecimenControllerTest {
+
+    private MockMvc mockMvc;
+    private ObjectMapper objectMapper;
 
     @Mock
     private OrderSpecimenService orderSpecimenService;
@@ -243,139 +432,86 @@ public class OrderSpecimenControllerTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+        // Initialize MockMvc in standalone mode (no Spring context needed)
+        mockMvc = MockMvcBuilders.standaloneSetup(orderSpecimenController).build();
 
-    // --- Helper Builders ---
-
-    private CreateOrderRequest buildCreateOrderRequest() {
-        CreateOrderRequest req = new CreateOrderRequest();
-        req.setPatientId(1L);
-        req.setClinicianId(2L);
-        req.setPriority(LabOrder.Priority.Routine);
-        req.setTestIds(Set.of(101L));
-        return req;
-    }
-
-    private LabOrder buildOrderEntity(Long id) {
-        LabOrder order = new LabOrder();
-        order.setOrderId(id);
-        order.setPatientId(1L);
-        order.setStatus(LabOrder.OrderStatus.Ordered);
-        return order;
-    }
-
-    private LabOrderResponse buildOrderResponse(Long id) {
-        return LabOrderResponse.builder()
-                .orderId(id)
-                .status(LabOrder.OrderStatus.Ordered)
-                .build();
+        // Configure ObjectMapper to handle LocalDateTime/OffsetDateTime
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
     }
 
     // --- LabOrder Tests ---
 
     @Test
-    void createOrder_ShouldReturnSavedOrder() {
-        CreateOrderRequest req = buildCreateOrderRequest();
-        LabOrder entity = buildOrderEntity(null);
-        LabOrder saved = buildOrderEntity(100L);
-        LabOrderResponse resp = buildOrderResponse(100L);
+    void createOrder_ShouldReturnOk() throws Exception {
+        // Arrange
+        CreateOrderRequest request = new CreateOrderRequest();
+        request.setClinicianId(1L);
+        request.setPatientId(101L);
+        request.setPriority(LabOrder.Priority.Urgent);
 
-        when(labOrderMapper.toEntity(req)).thenReturn(entity);
-        when(orderSpecimenService.createOrder(entity)).thenReturn(saved);
-        when(labOrderMapper.toResponse(saved)).thenReturn(resp);
+        LabOrder orderEntity = new LabOrder();
+        LabOrderResponse responseDto = LabOrderResponse.builder()
+                .orderId(1L)
+                .clinicianId(1L)
+                .build();
 
-        LabOrderResponse result = orderSpecimenController.createOrder(req);
+        when(labOrderMapper.toEntity(any(CreateOrderRequest.class))).thenReturn(orderEntity);
+        when(orderSpecimenService.createOrder(eq(orderEntity), eq(1L))).thenReturn(orderEntity);
+        when(labOrderMapper.toResponse(any(LabOrder.class))).thenReturn(responseDto);
 
-        assertNotNull(result);
-        assertEquals(100L, result.getOrderId());
-        verify(orderSpecimenService).createOrder(entity);
+        // Act & Assert
+        mockMvc.perform(post("/api/order-specimen/orders")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.orderId").value(1L));
     }
 
     @Test
-    void getOrders_ShouldReturnList() {
-        LabOrder o1 = buildOrderEntity(1L);
-        LabOrder o2 = buildOrderEntity(2L);
-        when(orderSpecimenService.getOrders()).thenReturn(List.of(o1, o2));
-        when(labOrderMapper.toResponse(any())).thenReturn(buildOrderResponse(1L));
+    void getOrders_ShouldReturnList() throws Exception {
+        when(orderSpecimenService.getOrders()).thenReturn(Collections.emptyList());
 
-        List<LabOrderResponse> result = orderSpecimenController.getOrders();
-
-        assertEquals(2, result.size());
-        verify(labOrderMapper, times(2)).toResponse(any());
-    }
-
-    @Test
-    void updateOrderStatus_ShouldUpdateWhenStatusPresent() {
-        UpdateOrderStatusRequest req = new UpdateOrderStatusRequest();
-        req.setStatus(LabOrder.OrderStatus.InProgress);
-        LabOrder updated = buildOrderEntity(1L);
-        updated.setStatus(LabOrder.OrderStatus.InProgress);
-
-        when(orderSpecimenService.updateOrderStatus(1L, req.getStatus())).thenReturn(updated);
-        when(labOrderMapper.toResponse(updated)).thenReturn(buildOrderResponse(1L));
-
-        LabOrderResponse result = orderSpecimenController.updateOrderStatus(1L, req);
-
-        assertNotNull(result);
-        verify(orderSpecimenService).updateOrderStatus(1L, LabOrder.OrderStatus.InProgress);
-    }
-
-    @Test
-    void updateOrderStatus_ShouldThrowBadRequest_WhenStatusNull() {
-        UpdateOrderStatusRequest req = new UpdateOrderStatusRequest();
-        req.setStatus(null);
-
-        assertThrows(BadRequestException.class, () -> orderSpecimenController.updateOrderStatus(1L, req));
-        verifyNoInteractions(orderSpecimenService);
+        mockMvc.perform(get("/api/order-specimen/orders"))
+                .andExpect(status().isOk());
     }
 
     // --- Specimen Tests ---
 
     @Test
-    void createSpecimen_ShouldReturnSavedSpecimen() {
+    void createSpecimen_ShouldReturnOk() throws Exception {
+        // Arrange
         Long orderId = 1L;
-        CreateSpecimenRequest req = new CreateSpecimenRequest();
-        req.setSpecimenType(Specimen.SpecimenType.Blood);
+        CreateSpecimenRequest request = new CreateSpecimenRequest();
+        request.setCollectorId(2L);
+        request.setSpecimenType(Specimen.SpecimenType.Blood);
 
-        LabOrder order = buildOrderEntity(orderId);
-        Specimen entity = new Specimen();
-        Specimen saved = new Specimen();
-        saved.setSpecimenId(50L);
-        SpecimenResponse resp = SpecimenResponse.builder().specimenId(50L).build();
+        LabOrder order = new LabOrder();
+        Specimen specimenEntity = new Specimen();
+        SpecimenResponse responseDto = SpecimenResponse.builder()
+                .specimenId(50L)
+                .collectorId(2L)
+                .build();
 
         when(orderSpecimenService.getOrderById(orderId)).thenReturn(order);
-        when(specimenMapper.toEntity(req, order)).thenReturn(entity);
-        when(orderSpecimenService.createSpecimen(entity)).thenReturn(saved);
-        when(specimenMapper.toResponse(saved)).thenReturn(resp);
+        when(specimenMapper.toEntity(any(CreateSpecimenRequest.class), eq(order))).thenReturn(specimenEntity);
+        when(orderSpecimenService.createSpecimen(eq(specimenEntity), eq(2L))).thenReturn(specimenEntity);
+        when(specimenMapper.toResponse(any(Specimen.class))).thenReturn(responseDto);
 
-        SpecimenResponse result = orderSpecimenController.createSpecimen(orderId, req);
-
-        assertNotNull(result);
-        assertEquals(50L, result.getSpecimenId());
-        verify(orderSpecimenService).getOrderById(orderId);
-        verify(orderSpecimenService).createSpecimen(entity);
+        // Act & Assert
+        mockMvc.perform(post("/api/order-specimen/orders/{orderId}/specimens", orderId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.specimenId").value(50L));
     }
 
     @Test
-    void getSpecimensByOrder_ShouldReturnList() {
+    void getSpecimensByOrder_ShouldReturnList() throws Exception {
         Long orderId = 1L;
-        Specimen s1 = new Specimen();
-        when(orderSpecimenService.getSpecimensByOrder(orderId)).thenReturn(List.of(s1));
-        when(specimenMapper.toResponse(s1)).thenReturn(SpecimenResponse.builder().build());
+        when(orderSpecimenService.getSpecimensByOrder(orderId)).thenReturn(Collections.emptyList());
 
-        List<SpecimenResponse> result = orderSpecimenController.getSpecimensByOrder(orderId);
-
-        assertEquals(1, result.size());
-        verify(orderSpecimenService).getSpecimensByOrder(orderId);
-    }
-
-    @Test
-    void updateSpecimenStatus_ShouldThrowBadRequest_WhenStatusNull() {
-        UpdateSpecimenStatusRequest req = new UpdateSpecimenStatusRequest();
-        req.setStatus(null);
-
-        assertThrows(BadRequestException.class, () -> orderSpecimenController.updateSpecimenStatus(1L, req));
-        verify(orderSpecimenService, never()).updateSpecimenStatus(anyLong(), any());
+        mockMvc.perform(get("/api/order-specimen/orders/{orderId}/specimens", orderId))
+                .andExpect(status().isOk());
     }
 }

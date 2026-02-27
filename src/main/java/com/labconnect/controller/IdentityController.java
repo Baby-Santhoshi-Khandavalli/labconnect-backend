@@ -103,7 +103,7 @@ public class IdentityController {
 //    }
 
     @PostMapping("/users")
-    @PreAuthorize("hasRole('Admin')")  // Only Admin can create users
+   // @PreAuthorize("hasRole('Admin')")  // Only Admin can create users
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO){
         return new ResponseEntity<>(identityService.createUser(userRequestDTO),HttpStatus.CREATED);
     }

@@ -48,7 +48,26 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/api/identity/login").permitAll()
                         .requestMatchers("/api/identity/audit/*").permitAll()
-                        .requestMatchers("/api/notifications/*").permitAll()
+                        .requestMatchers("/api/order-specimen/**").permitAll()
+                        .requestMatchers("/api/notifications/**").permitAll()
+                        .requestMatchers("/api/dashboard/**").permitAll()
+                        .requestMatchers("/api/instrument-runs/**").permitAll()
+                        .requestMatchers("/api/compliance/**").permitAll()
+                        .requestMatchers("/api/workflows/**").permitAll()
+                        .requestMatchers("/api/qc/**").permitAll()
+                                .requestMatchers("/api/results/**").permitAll()
+
+//                                .requestMatchers("/api/tests/tests/*").permitAll()        // GET by id
+//                                .requestMatchers("/api/tests/panel").permitAll()          // GET all panels
+//                                .requestMatchers("/api/tests/panel/*").permitAll()        // GET one panel
+//                                .requestMatchers("/api/tests/parameters/bytest/*").permitAll()
+//                                .requestMatchers("/api/tests/parameters/search/*").permitAll()
+
+// Everything else requires authentication; @PreAuthorize will enforce roles
+                               // .anyRequest().authenticated()
+
+
+
                         //.requestMatchers("/api/identity/users/**").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/identity/users").permitAll()
                         .anyRequest().authenticated()

@@ -11,3 +11,4 @@ public interface InstrumentRunRepository extends JpaRepository<InstrumentRun, Lo
     List<InstrumentRun> findByTest_TestId(Long testId);
     List<InstrumentRun> findByInstrumentName(String instrumentName);
 }
+
