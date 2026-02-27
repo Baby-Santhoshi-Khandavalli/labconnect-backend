@@ -22,7 +22,7 @@ public class JwtService {
     @Autowired
     private UserRepository userRepository; //to fetch the role
 
-    private static final String SECRET="Upn04U7NmyPxPnmEGS0PLRx5sO9Phjmvrt4i4WAdl5z";
+    private static final String SECRET="oiiqaf33puJC1nM1Qeq4PvIjygV2ddcJo7xJowZuF9v";
 
     public String generateToken(String username){
         Map<String, Object> claims=new HashMap<>();
