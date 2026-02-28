@@ -5,8 +5,8 @@ import com.labconnect.models.QualityControl;
 import com.labconnect.repository.QualityControlRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-
+//import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,3 +30,4 @@ class QualityControlRepositoryTest {
         assertEquals(QCStatus.PASS, result.get(0).getStatus());
     }
 }
+

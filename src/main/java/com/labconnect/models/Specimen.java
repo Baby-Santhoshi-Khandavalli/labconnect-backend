@@ -1,16 +1,11 @@
 package com.labconnect.models;
-
-
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDateTime;
-
 @Entity
 @Data
 @Table(name = "specimen")
 public class Specimen {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long specimenId;

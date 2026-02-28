@@ -1,6 +1,6 @@
 package com.labconnect.repository;
 import com.labconnect.Enum.Flag;
-import com.labconnect.models.Parameter;
+import com.labconnect.models.TestParameter;
 import com.labconnect.models.TestResult;
 import com.labconnect.models.TestWorkflow;
 import org.junit.jupiter.api.Assertions;
@@ -27,7 +27,7 @@ public class TestResultRepositoryTest {
         TestWorkflow workflow = new TestWorkflow(); // Ensure mandatory fields are set
         entityManager.persist(workflow);
 
-        Parameter parameter = new Parameter();
+        TestParameter parameter = new TestParameter();
         entityManager.persist(parameter);
 
         TestResult result = new TestResult();

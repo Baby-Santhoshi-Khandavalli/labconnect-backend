@@ -39,17 +39,48 @@ public interface TestMapper {
     })
     TestResponse toResponseDto(Test entity);
 
+//    default Department toDepartment(String value) {
+//        if (value == null || value.isBlank()) return null;
+//        return Department.valueOf(value.trim().toUpperCase());
+//    }
+//    default Method toMethod(String value) {
+//        if (value == null || value.isBlank()) return null;
+//        return Method.valueOf(value.trim().toUpperCase());
+//    }
+//    default Status toStatus(String value) {
+//        if (value == null || value.isBlank()) return null;
+//        return Status.valueOf(value.trim().toUpperCase());
+//    }
+
+    // TestMapper.java
     default Department toDepartment(String value) {
         if (value == null || value.isBlank()) return null;
-        return Department.valueOf(value.trim().toUpperCase());
+        String v = value.trim();
+        for (Department d : Department.values()) {
+            if (d.name().equalsIgnoreCase(v)) return d;
+        }
+        throw new IllegalArgumentException("Invalid department: " + value
+                + ". Allowed: Hematology, Biochemistry, Microbiology, Immunology");
     }
+
     default Method toMethod(String value) {
         if (value == null || value.isBlank()) return null;
-        return Method.valueOf(value.trim().toUpperCase());
+        String v = value.trim();
+        for (Method m : Method.values()) {
+            if (m.name().equalsIgnoreCase(v)) return m;
+        }
+        throw new IllegalArgumentException("Invalid method: " + value
+                + ". Allowed: Manual, Automated, POCT");
     }
+
     default Status toStatus(String value) {
         if (value == null || value.isBlank()) return null;
-        return Status.valueOf(value.trim().toUpperCase());
+        String v = value.trim();
+        for (Status s : Status.values()) {
+            if (s.name().equalsIgnoreCase(v)) return s;
+        }
+        throw new IllegalArgumentException("Invalid status: " + value
+                + ". Allowed: Active, Inactive, Pending");
     }
 
     default String fromDepartment(Department e) { return e == null ? null : e.name(); }

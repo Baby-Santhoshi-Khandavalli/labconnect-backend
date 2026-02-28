@@ -3,7 +3,7 @@ import com.labconnect.models.LabOrder;
 import com.labconnect.models.ResultAuthorization;
 import com.labconnect.models.TestResult;
 import com.labconnect.models.TestWorkflow;
-import com.labconnect.models.Parameter;
+import com.labconnect.models.TestParameter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class ResultAuthorizationRepositoryTest {
 
         // We need a TestResult because ResultAuthorization has a OneToOne mapping to it
         TestWorkflow workflow = entityManager.persist(new TestWorkflow());
-        Parameter parameter = entityManager.persist(new Parameter());
+        TestParameter parameter = entityManager.persist(new TestParameter());
 
         TestResult result = new TestResult();
         result.setWorkflow(workflow);
