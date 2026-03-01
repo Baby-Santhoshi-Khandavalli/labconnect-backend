@@ -1,5 +1,7 @@
 package com.labconnect.repository;
+
 import com.labconnect.models.LabOrder;
+import com.labconnect.models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,13 +23,30 @@ class LabOrderRepositoryTest {
     private LabOrderRepository labOrderRepository;
 
     private LabOrder sampleOrder;
+    private User clinicianUser;
+    private User patientUser;
 
     @BeforeEach
     void setUp() {
+        // Build clinician (User relation)
+        clinicianUser = new User();
+        clinicianUser.setUserId(200L);
+        clinicianUser.setName("Dr. Clinician");
+        clinicianUser.setEmail("clinician@example.com");
+        clinicianUser.setRole(User.Role.Clinician);
+
+        // Build patient (User relation)
+        patientUser = new User();
+        patientUser.setUserId(100L);
+        patientUser.setName("John Patient");
+        patientUser.setEmail("patient@example.com");
+        patientUser.setRole(User.Role.Clinician); // use appropriate role if you have one
+
+        // Build order with relations
         sampleOrder = new LabOrder();
         sampleOrder.setOrderId(1L);
-        sampleOrder.setPatientId(100L);
-        sampleOrder.setClinicianId(200L);
+        sampleOrder.setPatient(patientUser);        // set User, not long
+        sampleOrder.setClinician(clinicianUser);    // set User, not long
         sampleOrder.setOrderDate(LocalDateTime.now());
         sampleOrder.setPriority(LabOrder.Priority.Routine);
         sampleOrder.setStatus(LabOrder.OrderStatus.Ordered);
@@ -41,7 +60,8 @@ class LabOrderRepositoryTest {
         Optional<LabOrder> result = labOrderRepository.findById(1L);
 
         assertTrue(result.isPresent());
-        assertEquals(100L, result.get().getPatientId());
+        assertEquals(100L, result.get().getPatient().getUserId());
+        assertEquals(200L, result.get().getClinician().getUserId());
         verify(labOrderRepository, times(1)).findById(1L);
     }
 
@@ -79,25 +99,27 @@ class LabOrderRepositoryTest {
     }
 
     @Test
-    void findByPatientId_shouldReturnOrdersForPatient() {
-        when(labOrderRepository.findByPatientId(100L)).thenReturn(List.of(sampleOrder));
+    void findByPatientUserId_shouldReturnOrdersForPatient() {
+        // Use nested property finder for patient relation
+        when(labOrderRepository.findByPatient_UserId(100L)).thenReturn(List.of(sampleOrder));
 
-        List<LabOrder> result = labOrderRepository.findByPatientId(100L);
+        List<LabOrder> result = labOrderRepository.findByPatient_UserId(100L);
 
         assertEquals(1, result.size());
-        assertEquals(100L, result.get(0).getPatientId());
-        verify(labOrderRepository, times(1)).findByPatientId(100L);
+        assertEquals(100L, result.get(0).getPatient().getUserId());
+        verify(labOrderRepository, times(1)).findByPatient_UserId(100L);
     }
 
     @Test
     void findByClinicianUserId_shouldReturnOrdersForClinician() {
-        when(labOrderRepository.findByClinicianUserId(200L)).thenReturn(List.of(sampleOrder));
+        // Use nested property finder for clinician relation
+        when(labOrderRepository.findByClinician_UserId(200L)).thenReturn(List.of(sampleOrder));
 
-        List<LabOrder> result = labOrderRepository.findByClinicianUserId(200L);
+        List<LabOrder> result = labOrderRepository.findByClinician_UserId(200L);
 
-        verify(labOrderRepository, times(1)).findByClinicianUserId(200L);
+        verify(labOrderRepository, times(1)).findByClinician_UserId(200L);
         assertEquals(1, result.size());
         assertEquals(sampleOrder, result.get(0));
+        assertEquals(200L, result.get(0).getClinician().getUserId());
     }
-
 }

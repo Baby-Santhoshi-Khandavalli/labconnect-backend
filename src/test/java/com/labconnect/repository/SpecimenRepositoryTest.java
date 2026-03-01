@@ -33,7 +33,7 @@ class SpecimenRepositoryTest {
         sampleSpecimen.setOrder(order);
         sampleSpecimen.setSpecimenType(Specimen.SpecimenType.Blood);
         sampleSpecimen.setCollectedDate(LocalDateTime.now());
-        sampleSpecimen.setCollectorId(999L);
+        sampleSpecimenit .setCollectorId(999L);
         sampleSpecimen.setStatus(Specimen.SpecimenStatus.Collected);
         sampleSpecimen.setBarcodeValue("BAR-123");
         sampleSpecimen.setLabelText("Specimen-10");

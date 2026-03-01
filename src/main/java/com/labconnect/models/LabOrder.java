@@ -67,8 +67,20 @@ public class LabOrder {
     private Long orderId;
 
     // SIMPLE COLUMN: This fixes the "java.lang.Long is not an @Entity" crash
-    @Column(name = "patient_id")
-    private Long patientId;
+//    @Column(name = "patient_id")
+//    private Long patientId;
+
+//    @ManyToOne
+//    @JoinColumn(name = "patient_id")
+//    private User patient;
+    @ManyToOne
+    @JoinColumn(name = "patient_id", referencedColumnName = "user_id")
+    private User patient;
+
+    @ManyToOne
+    @JoinColumn(name = "clinician_id", referencedColumnName = "user_id")
+    private User clinician;
+
 
     private LocalDateTime orderDate;
 
@@ -85,9 +97,9 @@ public class LabOrder {
     private Set<Specimen> specimens = new LinkedHashSet<>();
 
     // RELATIONSHIP: Keep this because the User entity exists
-    @ManyToOne
-    @JoinColumn(name = "clinician_id")
-    private User clinician;
+//    @ManyToOne
+//    @JoinColumn(name = "clinician_id")
+//    private User clinician;
 
     @OneToMany(mappedBy = "order")
     private List<TestWorkflow> workflows;

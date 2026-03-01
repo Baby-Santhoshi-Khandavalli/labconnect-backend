@@ -29,7 +29,7 @@ public class OrderSpecimenService {
 
     @Transactional
     public LabOrder createOrder(LabOrder order) {
-        if (order.getPatientId() == null || order.getClinician() == null || order.getPriority() == null) {
+        if (order.getPatient() == null || order.getClinician() == null || order.getPriority() == null) {
             throw new BadRequestException("Missing required fields: patientId/clinicianId/priority");
         }
         if (order.getOrderDate() == null) {

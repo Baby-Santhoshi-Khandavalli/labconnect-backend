@@ -6,6 +6,7 @@ import com.labconnect.mapper.IdentityMapper;
 import com.labconnect.models.User;
 import com.labconnect.repository.AuditLogRepository;
 import com.labconnect.repository.UserRepository;
+import com.labconnect.services.IdentityService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

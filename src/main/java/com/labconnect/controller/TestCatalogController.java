@@ -32,13 +32,13 @@ public class TestCatalogController {
     }
 
     @PostMapping("/tests")
-    @PreAuthorize("hasRole('Admin')")
+    //@PreAuthorize("hasRole('Admin')")
     public ResponseEntity<TestResponse> createTest(@RequestBody TestRequest request) {
         return new ResponseEntity<>(testService.createTest(request), HttpStatus.CREATED);
     }
 
     @PutMapping("/tests/change/{id}")
-    @PreAuthorize("hasRole('Admin')")
+    //@PreAuthorize("hasRole('Admin')")
     public ResponseEntity<TestResponse> updateTest(@PathVariable Long id, @RequestBody TestRequest request) {
         return ResponseEntity.ok(testService.updateTest(id, request));
     }
@@ -49,7 +49,7 @@ public class TestCatalogController {
     }
 
     @GetMapping("/tests/active")
-    @PreAuthorize("hasAnyRole('Clinician','Technician')")
+    //@PreAuthorize("hasAnyRole('Clinician','Technician')")
     public ResponseEntity<List<TestResponse>> getActiveTests() {
         return ResponseEntity.ok(testService.getActiveTests());
     }
@@ -78,7 +78,7 @@ public class TestCatalogController {
 
     //TESTPANEL
     @PostMapping("/panel")
-    @PreAuthorize("hasRole('Admin')")
+    //@PreAuthorize("hasRole('Admin')")
     public ResponseEntity<TestPanelResponse> createPanel(@RequestBody TestPanelRequest request) {
         TestPanelResponse created = panelService.createPanel(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);

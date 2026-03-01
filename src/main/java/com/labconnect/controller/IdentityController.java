@@ -38,7 +38,7 @@ public class IdentityController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-//    @PostMapping("/login")
+//   @PostMapping("/login")
 //    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest){
 //        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 //        String token= jwtService.generateToken(loginRequest.getEmail());
@@ -103,7 +103,7 @@ public class IdentityController {
 //    }
 
     @PostMapping("/users")
-    @PreAuthorize("hasRole('Admin')")  // Only Admin can create users
+    //@PreAuthorize("hasRole('Admin')")  // Only Admin can create users
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO){
         return new ResponseEntity<>(identityService.createUser(userRequestDTO),HttpStatus.CREATED);
     }

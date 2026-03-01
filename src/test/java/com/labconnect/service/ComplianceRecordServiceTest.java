@@ -5,7 +5,7 @@ import com.labconnect.DTOResponse.ComplianceRecordResponseDTO;
 import com.labconnect.mapper.ComplianceRecordMapper;
 import com.labconnect.models.ComplianceRecord;
 import com.labconnect.repository.ComplianceRecordRepository;
-import com.labconnect.service.ComplianceRecordService;
+import com.labconnect.services.ComplianceRecordService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

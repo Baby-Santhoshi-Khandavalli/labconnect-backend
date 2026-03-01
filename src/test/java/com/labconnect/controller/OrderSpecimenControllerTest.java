@@ -213,6 +213,7 @@ import com.labconnect.mapper.LabOrderMapper;
 import com.labconnect.mapper.SpecimenMapper;
 import com.labconnect.models.LabOrder;
 import com.labconnect.models.Specimen;
+import com.labconnect.models.User;
 import com.labconnect.services.OrderSpecimenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -259,8 +260,16 @@ public class OrderSpecimenControllerTest {
 
     private LabOrder buildOrderEntity(Long id) {
         LabOrder order = new LabOrder();
-        order.setOrderId(id);
-        order.setPatientId(1L);
+        User patient = new User();
+//        order.setOrderId(id);
+        order.setPatient(patient);
+
+
+        User clinician = new User();
+        clinician.setUserId(2L);
+        order.setClinician(clinician);
+
+
         order.setStatus(LabOrder.OrderStatus.Ordered);
         return order;
     }

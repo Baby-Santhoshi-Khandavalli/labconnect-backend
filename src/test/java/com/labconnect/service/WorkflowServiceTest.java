@@ -2,7 +2,7 @@ package com.labconnect.service;
 
 
 import com.labconnect.Enum.WorkflowStatus;
-import com.labconnect.exceptions.ResourceNotFoundException;
+import com.labconnect.Exception.ResourceNotFoundException;
 import com.labconnect.models.TestWorkflow;
 import com.labconnect.repository.TestWorkflowRepository;
 import com.labconnect.services.TestWorkflowService;

@@ -27,6 +27,17 @@ public class User {
 ///
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Notification> notifications;
+    @OneToMany(mappedBy = "pathologist", cascade = CascadeType.ALL)
+    private List<ResultAuthorization> authorizations;
+    @OneToMany(mappedBy = "clinician", cascade = CascadeType.ALL)
+    private List<LabOrder> labOrders;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<LabOrder> patientLabOrders;
+
+//    @OneToMany(mappedBy = "clinician", cascade = CascadeType.ALL)
+//    private List<LabOrder> labOrders;
+
 //
 //    @OneToMany(mappedBy = "clinician",fetch = FetchType.EAGER)
 //    private List<LabOrder> orders;
