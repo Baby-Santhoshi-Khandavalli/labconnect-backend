@@ -1,6 +1,6 @@
 package com.labconnect.models.testCatalog;
 import com.labconnect.Enum.Flag;
-import com.labconnect.models.Test;
+import com.labconnect.models.testCatalog.Test;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

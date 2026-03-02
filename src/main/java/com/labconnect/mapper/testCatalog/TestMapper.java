@@ -5,7 +5,7 @@ import com.labconnect.DTOResponse.testCatalog.TestResponse;
 import com.labconnect.Enum.Department;
 import com.labconnect.Enum.Method;
 import com.labconnect.Enum.Status;
-import com.labconnect.models.Test;
+import com.labconnect.models.testCatalog.Test;
 import org.mapstruct.*;
 
 

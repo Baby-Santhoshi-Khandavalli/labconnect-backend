@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class TestParameterService {
 
-    private static final Logger log = LoggerFactory.getLogger(com.labconnect.services.TestParameterService.class);
+    private static final Logger log = LoggerFactory.getLogger(com.labconnect.services.testCatalog.TestParameterService.class);
 
     private final TestParameterRepository testParameterRepository;
     private final TestRepository testRepository;

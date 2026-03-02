@@ -1,9 +1,11 @@
 package com.labconnect.controller.workFlow;
 
 import com.labconnect.DTORequest.TestWorkflowRequestDTO;
+import com.labconnect.DTORequest.workFlow.TestWorkFlowRequestDTO;
 import com.labconnect.DTOResponse.TestWorkflowResponseDTO;
 import com.labconnect.mapper.TestWorkflowMapper;
 import com.labconnect.models.TestWorkflow;
+import com.labconnect.models.workFlow.TestWorkFlow;
 import com.labconnect.services.TestWorkflowService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +32,9 @@ public class TestWorkFlowController {
     }
 
     @PostMapping
-    public TestWorkflowResponseDTO createWorkflow(@Valid @RequestBody TestWorkflowRequestDTO dto) {
-        TestWorkflow workflow = mapper.toEntity(dto);
-        return mapper.toResponseDTO(service.createWorkflow(workflow));
+    public TestWorkflowResponseDTO createWorkflow(@Valid @RequestBody TestWorkFlowRequestDTO dto) {
+        TestWorkFlow workflow = mapper.toEntity(dto);
+        return mapper.toResponseDTO(service.createWorkFlow(workflow));
     }
 
     @PutMapping("/{id}/status")

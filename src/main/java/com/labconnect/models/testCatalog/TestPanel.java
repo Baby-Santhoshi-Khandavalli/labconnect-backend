@@ -1,5 +1,5 @@
 package com.labconnect.models.testCatalog;
-import com.labconnect.models.PanelMapping;
+import com.labconnect.models.testCatalog.PanelMapping;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

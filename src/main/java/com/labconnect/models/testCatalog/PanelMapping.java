@@ -1,6 +1,6 @@
 package com.labconnect.models.testCatalog;
-import com.labconnect.models.Test;
-import com.labconnect.models.TestPanel;
+import com.labconnect.models.testCatalog.Test;
+import com.labconnect.models.testCatalog.TestPanel;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

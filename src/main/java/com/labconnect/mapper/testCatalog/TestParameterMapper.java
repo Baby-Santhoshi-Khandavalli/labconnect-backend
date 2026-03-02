@@ -2,8 +2,8 @@ package com.labconnect.mapper.testCatalog;
 import com.labconnect.DTORequest.testCatalog.TestParameterRequest;
 import com.labconnect.DTOResponse.testCatalog.TestParameterResponse;
 import com.labconnect.Enum.Flag;
-import com.labconnect.models.Test;
-import com.labconnect.models.TestParameter;
+import com.labconnect.models.testCatalog.Test;
+import com.labconnect.models.testCatalog.TestParameter;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")

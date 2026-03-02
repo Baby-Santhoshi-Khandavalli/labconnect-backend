@@ -1,6 +1,6 @@
 package com.labconnect.mapper.testCatalog;
 import com.labconnect.DTOResponse.testCatalog.PanelMappingResponse;
-import com.labconnect.models.PanelMapping;
+import com.labconnect.models.testCatalog.PanelMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

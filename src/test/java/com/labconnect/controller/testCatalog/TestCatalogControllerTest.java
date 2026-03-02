@@ -2,7 +2,7 @@ package com.labconnect.controller.testCatalog;
 
 import com.labconnect.DTORequest.testCatalog.TestPanelRequest;
 import com.labconnect.DTORequest.testCatalog.TestParameterRequest;
-import com.labconnect.DTORequest.testCatalog.TestRequest;
+import com.labconnect.DTORequest.TestRequest;
 import com.labconnect.DTOResponse.testCatalog.PanelMappingResponse;
 import com.labconnect.DTOResponse.testCatalog.TestPanelResponse;
 import com.labconnect.DTOResponse.testCatalog.TestParameterResponse;

@@ -1,8 +1,8 @@
 package com.labconnect.mapper.testCatalog;
 import com.labconnect.DTORequest.testCatalog.TestPanelRequest;
 import com.labconnect.DTOResponse.testCatalog.TestPanelResponse;
-import com.labconnect.models.PanelMapping;
-import com.labconnect.models.TestPanel;
+import com.labconnect.models.testCatalog.PanelMapping;
+import com.labconnect.models.testCatalog.TestPanel;
 import org.mapstruct.*;
 
 import java.util.Collections;
