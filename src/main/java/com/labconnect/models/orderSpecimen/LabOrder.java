@@ -1,7 +1,8 @@
 package com.labconnect.models.orderSpecimen;
 
-import com.labconnect.models.*;
 import com.labconnect.models.Identity.User;
+import com.labconnect.models.testResult.ResultAuthorization;
+import com.labconnect.models.workFlow.TestWorkFlow;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -39,10 +40,11 @@ public class LabOrder {
     // RELATIONSHIP: Keep this because the User entity exists
     @ManyToOne
     @JoinColumn(name = "clinician_id")
-    private User clinician;
+    private User clinicianId;
+//    private User clinician;
 
     @OneToMany(mappedBy = "order")
-    private List<TestWorkflow> workflows;
+    private List<TestWorkFlow> workflows;
 
     @OneToOne(mappedBy = "order")
     private ResultAuthorization authorization;

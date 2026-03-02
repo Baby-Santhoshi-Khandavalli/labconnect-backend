@@ -1,6 +1,6 @@
 package com.labconnect.security;
 
-import com.labconnect.models.User;
+import com.labconnect.models.Identity.User;
 //import jakarta.annotation.Nullable;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;

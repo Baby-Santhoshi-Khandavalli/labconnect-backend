@@ -1,6 +1,6 @@
 package com.labconnect.DTOResponse.testResult;
 
-import com.labconnect.models.User;
+import com.labconnect.models.Identity.User;
 import lombok.Data;
 
 import java.time.LocalDateTime;

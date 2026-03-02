@@ -1,8 +1,10 @@
 package com.labconnect.models.testResult;
 
 import com.labconnect.Enum.Flag;
-import com.labconnect.models.TestWorkflow;
+
+import com.labconnect.models.Identity.User;
 import com.labconnect.models.testCatalog.TestParameter;
+import com.labconnect.models.workFlow.TestWorkFlow;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -18,7 +20,7 @@ public class TestResult {
 
     @ManyToOne
     @JoinColumn(name = "workflow_id", nullable = false)
-    private TestWorkflow workflow;
+    private TestWorkFlow workflow;
 
     @ManyToOne
     @JoinColumn(name = "parameter_id", nullable = false)

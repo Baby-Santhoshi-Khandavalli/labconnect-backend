@@ -2,9 +2,9 @@ package com.labconnect.service.qualityControl;
 
 
 import com.labconnect.Enum.QCStatus;
-import com.labconnect.models.QualityControl;
-import com.labconnect.repository.QualityControlRepository;
-import com.labconnect.services.QualityControlService;
+import com.labconnect.models.qualityControl.QualityControl;
+import com.labconnect.repository.qualityControl.QualityControlRepository;
+import com.labconnect.services.qualityControl.QualityControlService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 

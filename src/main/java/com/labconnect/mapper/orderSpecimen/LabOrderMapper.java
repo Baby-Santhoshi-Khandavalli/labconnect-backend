@@ -15,7 +15,7 @@ public interface LabOrderMapper {
     @Mapping(target = "orderId", ignore = true)
     // Direct mapping of Long to Long
     @Mapping(source = "request.patientId", target = "patientId")
-    @Mapping(target = "clinician", ignore = true)
+    @Mapping(target = "clinicianId", ignore = true)
     @Mapping(source = "request.orderDate", target = "orderDate")
     @Mapping(source = "request.priority", target = "priority")
     @Mapping(source = "request.testIds", target = "testIds")
@@ -30,7 +30,7 @@ public interface LabOrderMapper {
     // Direct mapping back to DTO
     @Mapping(source = "entity.patientId", target = "patientId")
     // Reach into the Clinician object to get the ID
-    @Mapping(source = "entity.clinician.userId", target = "clinicianId")
+    @Mapping(source = "entity.clinicianId.userId", target = "clinicianId")
     @Mapping(source = "entity.orderDate", target = "orderDate")
     @Mapping(source = "entity.priority", target = "priority")
     @Mapping(source = "entity.status", target = "status")

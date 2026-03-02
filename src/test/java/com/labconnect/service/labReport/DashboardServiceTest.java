@@ -1,9 +1,9 @@
 package com.labconnect.service.labReport;
 
-import com.labconnect.models.LabReport;
-import com.labconnect.repository.LabReportRepository;
+import com.labconnect.models.labReport.LabReport;
+import com.labconnect.repository.labReport.LabReportRepository;
 //import com.labconnect.Exception.ReportNotFoundException;
-import com.labconnect.services.DashboardService;
+import com.labconnect.services.labReport.DashboardService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

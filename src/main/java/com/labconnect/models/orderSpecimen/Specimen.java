@@ -1,9 +1,5 @@
 package com.labconnect.models.orderSpecimen;
 
-import com.labconnect.models.orderSpecimen.Auditable;
-import com.labconnect.models.orderSpecimen.LabOrder;
-
-import com.labconnect.models.*;
 import com.labconnect.models.Identity.User;
 import jakarta.persistence.*;
 import lombok.Data;

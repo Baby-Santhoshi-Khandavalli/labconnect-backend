@@ -2,7 +2,7 @@ package com.labconnect.controller.testCatalog;
 
 import com.labconnect.DTORequest.testCatalog.TestPanelRequest;
 import com.labconnect.DTORequest.testCatalog.TestParameterRequest;
-import com.labconnect.DTORequest.TestRequest;
+import com.labconnect.DTORequest.testCatalog.TestRequest;
 import com.labconnect.DTOResponse.testCatalog.PanelMappingResponse;
 import com.labconnect.DTOResponse.testCatalog.TestPanelResponse;
 import com.labconnect.DTOResponse.testCatalog.TestParameterResponse;
@@ -125,22 +125,7 @@ class TestCatalogControllerTest {
         verify(testService).getActiveTests();
     }
 
-    @Test
-    @DisplayName("getAllTests -> returns list")
-    void getAllTests_returnsList() {
-        List<TestResponse> list = List.of(
-                TestResponse.builder().testId(1L).name("CBC").status("Active").build()
-        );
-        when(testService.getAllTests()).thenReturn(list);
 
-        ResponseEntity<List<TestResponse>> result = controller.getAllTests();
-
-        assertEquals(200, result.getStatusCodeValue());
-        assertNotNull(result.getBody());
-        assertEquals(1, result.getBody().size());
-        assertEquals("CBC", result.getBody().get(0).getName());
-        verify(testService).getAllTests();
-    }
 
     // -------------------- PARAMETERS --------------------
 

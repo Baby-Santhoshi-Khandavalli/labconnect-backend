@@ -1,6 +1,6 @@
 package com.labconnect.mapper.testCatalog;
 import org.mapstruct.Mapping;
-import com.labconnect.DTORequest.TestRequest;
+import com.labconnect.DTORequest.testCatalog.TestRequest;
 import com.labconnect.DTOResponse.testCatalog.TestResponse;
 import com.labconnect.Enum.Department;
 import com.labconnect.Enum.Method;

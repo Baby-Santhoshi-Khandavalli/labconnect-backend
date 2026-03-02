@@ -1,8 +1,8 @@
 package com.labconnect.mapper.testResult;
 
-import com.labconnect.DTORequest.ResultAuthorizationRequestDTO;
-import com.labconnect.DTOResponse.ResultAuthorizationResponseDTO;
-import com.labconnect.models.ResultAuthorization;
+import com.labconnect.DTORequest.testResult.ResultAuthorizationRequestDTO;
+import com.labconnect.DTOResponse.testResult.ResultAuthorizationResponseDTO;
+import com.labconnect.models.testResult.ResultAuthorization;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")

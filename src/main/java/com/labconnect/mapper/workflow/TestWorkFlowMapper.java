@@ -1,12 +1,9 @@
 package com.labconnect.mapper.workflow;
-
-
-//import com.labconnect.dto.request.TestWorkflowRequestDTO;
-import com.labconnect.DTORequest.TestWorkflowRequestDTO;
-import com.labconnect.DTOResponse.TestWorkflowResponseDTO;
-import com.labconnect.models.LabOrder;
-import com.labconnect.models.Test;
-import com.labconnect.models.TestWorkflow;
+import com.labconnect.DTORequest.workFlow.TestWorkFlowRequestDTO;
+import com.labconnect.DTOResponse.workFlow.TestWorkFlowResponseDTO;
+import com.labconnect.models.orderSpecimen.LabOrder;
+import com.labconnect.models.testCatalog.Test;
+import com.labconnect.models.workFlow.TestWorkFlow;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -17,12 +14,12 @@ public interface TestWorkFlowMapper {
     @Mapping(source = "workflowID", target = "workflowId")
     @Mapping(source = "order.orderId", target = "orderId")
     @Mapping(source = "test.testId", target = "testId")
-    TestWorkflowResponseDTO toResponseDTO(TestWorkflow workflow);
+    TestWorkFlowResponseDTO toResponseDTO(TestWorkFlow workflow);
 
     // Request DTO → Entity
     @Mapping(source = "orderId", target = "order")
     @Mapping(source = "testId", target = "test")
-    TestWorkflow toEntity(TestWorkflowRequestDTO dto);
+    TestWorkFlow toEntity(TestWorkFlowRequestDTO dto);
 
     // Helper methods for nested mapping
     default LabOrder mapOrderId(Long orderId) {

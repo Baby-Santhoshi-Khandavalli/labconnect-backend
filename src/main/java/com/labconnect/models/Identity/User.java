@@ -2,6 +2,7 @@ package com.labconnect.models.Identity;
 
 import com.labconnect.models.Identity.AuditLog;
 import com.labconnect.models.notification.Notification;
+import com.labconnect.models.orderSpecimen.LabOrder;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -30,8 +31,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Notification> notifications;
 //
-//    @OneToMany(mappedBy = "clinician",fetch = FetchType.EAGER)
-//    private List<LabOrder> orders;
+//   @OneToMany(mappedBy = "clinician",fetch = FetchType.EAGER)
+   @OneToMany(mappedBy = "clinicianId",fetch = FetchType.EAGER)
+   private List<LabOrder> orders;
+
+
     public enum Role{
         Clinician,Technician,Pathologist,Manager,Admin
     }

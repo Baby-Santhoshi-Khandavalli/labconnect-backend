@@ -2,8 +2,8 @@ package com.labconnect.repository.testResult;
 
 
 import com.labconnect.Enum.Flag;
-import com.labconnect.models.TestResult;
-import com.labconnect.models.User;
+import com.labconnect.models.testResult.TestResult;
+import com.labconnect.models.Identity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

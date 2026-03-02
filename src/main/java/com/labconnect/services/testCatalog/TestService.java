@@ -1,8 +1,8 @@
 package com.labconnect.services.testCatalog;
 import com.labconnect.DTOResponse.testCatalog.TestResponse;
 import com.labconnect.Enum.Status;
-import com.labconnect.DTORequest.TestRequest;
-import com.labconnect.Exception.testCatalog.TestException;
+import com.labconnect.DTORequest.testCatalog.TestRequest;
+import com.labconnect.exception.testCatalog.TestException;
 import com.labconnect.Exception.testCatalog.TestResultNotFoundException;
 import com.labconnect.mapper.testCatalog.TestMapper;
 import com.labconnect.models.testCatalog.Test;

@@ -2,10 +2,10 @@ package com.labconnect.repository.testResult;
 
 
 import com.labconnect.Enum.Flag;
-import com.labconnect.models.TestParameter;
-import com.labconnect.models.TestResult;
-import com.labconnect.models.TestWorkflow;
-import com.labconnect.models.User;
+import com.labconnect.models.testCatalog.TestParameter;
+import com.labconnect.models.testResult.TestResult;
+import com.labconnect.models.workFlow.TestWorkFlow;
+import com.labconnect.models.Identity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class TestResultRepositoryTest {
         // Arrange: persist required associations
 
         // Persist a workflow (set required fields if your entity has NOT NULL constraints)
-        TestWorkflow workflow = new TestWorkflow();
+        TestWorkFlow workflow = new TestWorkFlow();
         // e.g., workflow.setStatus(...); workflow.setStage(...); etc.
         workflow = entityManager.persistAndFlush(workflow);
 

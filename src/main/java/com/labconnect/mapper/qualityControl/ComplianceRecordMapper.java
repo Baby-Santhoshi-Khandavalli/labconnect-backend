@@ -1,8 +1,8 @@
 package com.labconnect.mapper.qualityControl;
 
-import com.labconnect.DTORequest.ComplianceRecordRequestDTO;
-import com.labconnect.DTOResponse.ComplianceRecordResponseDTO;
-import com.labconnect.models.ComplianceRecord;
+import com.labconnect.DTORequest.qualityControl.ComplianceRecordRequestDTO;
+import com.labconnect.DTOResponse.qualityControl.ComplianceRecordResponseDTO;
+import com.labconnect.models.qualityControl.ComplianceRecord;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

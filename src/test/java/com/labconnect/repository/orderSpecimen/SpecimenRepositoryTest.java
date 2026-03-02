@@ -1,6 +1,7 @@
 package com.labconnect.repository.orderSpecimen;
 
 
+import com.labconnect.models.Identity.User;
 import com.labconnect.models.orderSpecimen.LabOrder;
 import com.labconnect.models.orderSpecimen.Specimen;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +35,13 @@ class SpecimenRepositoryTest {
         sampleSpecimen.setOrder(order);
         sampleSpecimen.setSpecimenType(Specimen.SpecimenType.Blood);
         sampleSpecimen.setCollectedDate(LocalDateTime.now());
-        sampleSpecimen.setCollectorId(999L);
+
+        // FIX: set a User as collector, not a Long id
+        User collector = new User();
+        collector.setUserId(999L);
+        sampleSpecimen.setCollector(collector);
+
+       // sampleSpecimen.setCollectorId(999L);
         sampleSpecimen.setStatus(Specimen.SpecimenStatus.Collected);
         sampleSpecimen.setBarcodeValue("BAR-123");
         sampleSpecimen.setLabelText("Specimen-10");

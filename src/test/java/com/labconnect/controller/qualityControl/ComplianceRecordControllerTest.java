@@ -1,9 +1,8 @@
 package com.labconnect.controller.qualityControl;
 
-import com.labconnect.DTORequest.ComplianceRecordRequestDTO;
-import com.labconnect.DTOResponse.ComplianceRecordResponseDTO;
-import com.labconnect.controller.ComplianceRecordController;
-import com.labconnect.services.ComplianceRecordService;
+import com.labconnect.DTORequest.qualityControl.ComplianceRecordRequestDTO;
+import com.labconnect.DTOResponse.qualityControl.ComplianceRecordResponseDTO;
+import com.labconnect.services.qualityControl.ComplianceRecordService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
 import java.util.Collections;

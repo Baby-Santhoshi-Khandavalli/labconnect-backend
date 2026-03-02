@@ -2,7 +2,7 @@ package com.labconnect.repository.workFlow;
 
 
 import com.labconnect.Enum.RunStatus;
-import com.labconnect.models.InstrumentRun;
+import com.labconnect.models.workFlow.InstrumentRun;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

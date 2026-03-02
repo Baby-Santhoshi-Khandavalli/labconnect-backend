@@ -1,6 +1,6 @@
 package com.labconnect.repository.labReport;
 
-import com.labconnect.models.LabReport;
+import com.labconnect.models.labReport.LabReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

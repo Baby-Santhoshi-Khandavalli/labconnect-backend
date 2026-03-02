@@ -1,11 +1,11 @@
 package com.labconnect.controller.qualityControl;
 
-import com.labconnect.DTORequest.QualityControlRequestDTO;
-import com.labconnect.DTOResponse.QualityControlResponseDTO;
-import com.labconnect.controller.QualityControlController;
-import com.labconnect.mapper.QualityControlMapper;
-import com.labconnect.models.QualityControl;
-import com.labconnect.services.QualityControlService;
+
+import com.labconnect.DTORequest.qualityControl.QualityControlRequestDTO;
+import com.labconnect.DTOResponse.qualityControl.QualityControlResponseDTO;
+import com.labconnect.mapper.qualityControl.QualityControlMapper;
+import com.labconnect.models.qualityControl.QualityControl;
+import com.labconnect.services.qualityControl.QualityControlService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,6 +2,7 @@ package com.labconnect.repository.orderSpecimen;
 
 
 import com.labconnect.models.orderSpecimen.LabOrder;
+import com.labconnect.models.Identity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,12 @@ class LabOrderRepositoryTest {
         sampleOrder = new LabOrder();
         sampleOrder.setOrderId(1L);
         sampleOrder.setPatientId(100L);
-        sampleOrder.setClinicianId(200L);
+//FIX: set a User, not a Long
+        User clinician = new User();
+        clinician.setUserId(200L);
+        sampleOrder.setClinicianId(clinician);
+
+        //sampleOrder.setClinicianId(200L);
         sampleOrder.setOrderDate(LocalDateTime.now());
         sampleOrder.setPriority(LabOrder.Priority.Routine);
         sampleOrder.setStatus(LabOrder.OrderStatus.Ordered);

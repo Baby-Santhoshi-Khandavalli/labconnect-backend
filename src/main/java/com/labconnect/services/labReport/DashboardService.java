@@ -1,8 +1,8 @@
 package com.labconnect.services.labReport;
 
 
-import com.labconnect.models.LabReport;
-import com.labconnect.repository.LabReportRepository;
+import com.labconnect.models.labReport.LabReport;
+import com.labconnect.repository.labReport.LabReportRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

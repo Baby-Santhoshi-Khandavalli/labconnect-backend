@@ -1,6 +1,6 @@
 package com.labconnect.controller.Identity;
 
-import com.labconnect.DTORequest.LoginRequest;
+import com.labconnect.DTORequest.Identity.LoginRequest;
 import com.labconnect.DTORequest.Identity.UserRequestDTO;
 import com.labconnect.DTOResponse.Identity.AuditLogDTO;
 import com.labconnect.DTOResponse.Identity.UserResponseDTO;

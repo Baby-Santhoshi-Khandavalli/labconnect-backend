@@ -1,6 +1,7 @@
 package com.labconnect.models.qualityControl;
 
 import com.labconnect.Enum.QCStatus;
+import com.labconnect.models.testCatalog.Test;
 import jakarta.persistence.*;
 import lombok.Data;
 

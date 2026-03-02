@@ -1,7 +1,7 @@
 package com.labconnect.services.qualityControl;
 
-import com.labconnect.models.QualityControl;
-import com.labconnect.repository.QualityControlRepository;
+import com.labconnect.models.qualityControl.QualityControl;
+import com.labconnect.repository.qualityControl.QualityControlRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,10 +1,11 @@
 package com.labconnect.controller.workFlow;
 
-import com.labconnect.DTORequest.InstrumentRunRequestDTO;
-import com.labconnect.DTOResponse.InstrumentRunResponseDTO;
-import com.labconnect.mapper.InstrumentRunMapper;
-import com.labconnect.models.InstrumentRun;
-import com.labconnect.services.InstrumentRunService;
+import com.labconnect.DTORequest.workFlow.InstrumentRunRequestDTO;
+import com.labconnect.DTOResponse.workFlow.InstrumentRunResponseDTO;
+import com.labconnect.mapper.workflow.InstrumentRunMapper;
+
+import com.labconnect.models.workFlow.InstrumentRun;
+import com.labconnect.services.workFlow.InstrumentRunService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 

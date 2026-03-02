@@ -1,9 +1,10 @@
 package com.labconnect.mapper.workflow;
 
 
-import com.labconnect.DTORequest.InstrumentRunRequestDTO;
-import com.labconnect.DTOResponse.InstrumentRunResponseDTO;
-import com.labconnect.models.InstrumentRun;
+
+import com.labconnect.DTORequest.workFlow.InstrumentRunRequestDTO;
+import com.labconnect.DTOResponse.workFlow.InstrumentRunResponseDTO;
+import com.labconnect.models.workFlow.InstrumentRun;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

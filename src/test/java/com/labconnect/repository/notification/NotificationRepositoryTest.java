@@ -9,8 +9,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class NotificationRepositoryTest {
 
@@ -36,10 +35,12 @@ class NotificationRepositoryTest {
         Notification n1 = new Notification();
         Notification n2 = new Notification();
 
-        when(repo.findByUserId(10L)).thenReturn(Arrays.asList(n1, n2));
+        // FIX: Use the method that exists in the interface
+        when(repo.findByUser_UserId(10L)).thenReturn(Arrays.asList(n1, n2));
 
-        var result = repo.findByUserId(10L);
+        var result = repo.findByUser_UserId(10L);
 
         assertEquals(2, result.size());
+        verify(repo, times(1)).findByUser_UserId(10L);
     }
 }

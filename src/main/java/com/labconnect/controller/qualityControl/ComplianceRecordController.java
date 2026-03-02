@@ -1,8 +1,8 @@
 package com.labconnect.controller.qualityControl;
 
-import com.labconnect.DTORequest.ComplianceRecordRequestDTO;
-import com.labconnect.DTOResponse.ComplianceRecordResponseDTO;
-import com.labconnect.services.ComplianceRecordService;
+import com.labconnect.DTORequest.qualityControl.ComplianceRecordRequestDTO;
+import com.labconnect.DTOResponse.qualityControl.ComplianceRecordResponseDTO;
+import com.labconnect.services.qualityControl.ComplianceRecordService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

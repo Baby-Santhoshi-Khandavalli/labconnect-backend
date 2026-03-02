@@ -1,7 +1,4 @@
 package com.labconnect.DTOResponse.workFlow;
-
-
-
 import com.labconnect.Enum.WorkflowStatus;
 import lombok.Data;
 

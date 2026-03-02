@@ -1,9 +1,9 @@
 package com.labconnect.service.testResult;
 
-import com.labconnect.models.TestResult;
-import com.labconnect.repository.ResultAuthorizationRepository;
-import com.labconnect.repository.TestResultRepository;
-import com.labconnect.services.ResultService;
+import com.labconnect.models.testResult.TestResult;
+import com.labconnect.repository.testResult.ResultAuthorizationRepository;
+import com.labconnect.repository.testResult.TestResultRepository;
+import com.labconnect.services.testResult.ResultService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

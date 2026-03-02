@@ -1,5 +1,5 @@
 package com.labconnect.service.testCatalog;
-import com.labconnect.DTORequest.TestRequest;
+import com.labconnect.DTORequest.testCatalog.TestRequest;
 import com.labconnect.DTOResponse.testCatalog.TestResponse;
 import com.labconnect.Enum.Status;
 import com.labconnect.mapper.testCatalog.TestMapper;

@@ -1,14 +1,14 @@
 package com.labconnect.repository.qualityControl;
 
 import com.labconnect.Enum.QCStatus;
-import com.labconnect.models.QualityControl;
-import com.labconnect.repository.QualityControlRepository;
+import com.labconnect.models.qualityControl.QualityControl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @DataJpaTest

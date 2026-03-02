@@ -1,6 +1,6 @@
 package com.labconnect.repository.testResult;
 
-import com.labconnect.models.ResultAuthorization;
+import com.labconnect.models.testResult.ResultAuthorization;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

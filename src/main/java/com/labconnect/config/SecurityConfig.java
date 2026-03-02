@@ -3,6 +3,7 @@ import com.labconnect.security.AuthFilter;
 import com.labconnect.security.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 //import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 //import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -23,12 +25,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@ComponentScan("com.labconnect.security")
 public class SecurityConfig {
     @Autowired
     private MyUserDetailsService myUserDetailsService;
 
     @Autowired
     private AuthFilter authFilter;
+//
+//    @Bean
+//    public MyUserDetailsService userDetailsService() {
+//        return new MyUserDetailsService(); // Replace with your implementation
+//    }
+
 
     @Bean
     public AuthenticationProvider authenticationProvider(){

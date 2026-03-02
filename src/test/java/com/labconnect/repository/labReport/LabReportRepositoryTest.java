@@ -1,6 +1,6 @@
 package com.labconnect.repository.labReport;
 
-import com.labconnect.models.LabReport;
+import com.labconnect.models.labReport.LabReport;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

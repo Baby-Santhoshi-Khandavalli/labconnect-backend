@@ -1,7 +1,7 @@
 package com.labconnect.repository.qualityControl;
 
 import com.labconnect.Enum.QCStatus;
-import com.labconnect.models.QualityControl;
+import com.labconnect.models.qualityControl.QualityControl;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

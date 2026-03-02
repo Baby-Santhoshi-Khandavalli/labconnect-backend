@@ -1,8 +1,8 @@
 package com.labconnect.controller.labReport;
 
 
-import com.labconnect.models.LabReport;
-import com.labconnect.services.DashboardService;
+import com.labconnect.models.labReport.LabReport;
+import com.labconnect.services.labReport.DashboardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,11 +1,11 @@
 package com.labconnect.service.qualityControl;
 
-import com.labconnect.DTORequest.ComplianceRecordRequestDTO;
-import com.labconnect.DTOResponse.ComplianceRecordResponseDTO;
-import com.labconnect.mapper.ComplianceRecordMapper;
-import com.labconnect.models.ComplianceRecord;
-import com.labconnect.repository.ComplianceRecordRepository;
-import com.labconnect.services.ComplianceRecordService;
+import com.labconnect.DTORequest.qualityControl.ComplianceRecordRequestDTO;
+import com.labconnect.DTOResponse.qualityControl.ComplianceRecordResponseDTO;
+import com.labconnect.mapper.qualityControl.ComplianceRecordMapper;
+import com.labconnect.models.qualityControl.ComplianceRecord;
+import com.labconnect.repository.qualityControl.ComplianceRecordRepository;
+import com.labconnect.services.qualityControl.ComplianceRecordService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

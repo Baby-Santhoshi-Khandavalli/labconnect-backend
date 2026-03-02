@@ -72,8 +72,8 @@ public class OrderSpecimenServiceTest {
         LabOrder savedOrder = orderSpecimenService.createOrder(order, clinicianId);
 
         // Assert
-        assertNotNull(savedOrder.getClinician());
-        assertEquals("Dr. Smith", savedOrder.getClinician().getName());
+        assertNotNull(savedOrder.getClinicianId());
+        assertEquals("Dr. Smith", savedOrder.getClinicianId().getName());
         assertNotNull(savedOrder.getAudit().getCreatedAt());
         assertNotNull(savedOrder.getAudit().getUpdatedAt());
         verify(labOrderRepository).save(order);

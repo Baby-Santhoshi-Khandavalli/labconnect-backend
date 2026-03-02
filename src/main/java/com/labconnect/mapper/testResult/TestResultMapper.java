@@ -1,9 +1,9 @@
 package com.labconnect.mapper.testResult;
 
-import com.labconnect.DTORequest.TestResultRequestDTO;
-import com.labconnect.DTOResponse.TestResultResponseDTO;
+import com.labconnect.DTORequest.testResult.TestResultRequestDTO;
+import com.labconnect.DTOResponse.testResult.TestResultResponseDTO;
 import com.labconnect.Enum.Flag;
-import com.labconnect.models.TestResult;
+import com.labconnect.models.testResult.TestResult;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")

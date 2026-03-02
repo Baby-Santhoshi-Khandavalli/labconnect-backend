@@ -1,8 +1,8 @@
 package com.labconnect.controller.testResult;
 
-import com.labconnect.models.ResultAuthorization;
-import com.labconnect.models.TestResult;
-import com.labconnect.services.ResultService;
+import com.labconnect.models.testResult.ResultAuthorization;
+import com.labconnect.models.testResult.TestResult;
+import com.labconnect.services.testResult.ResultService;
 import org.springframework.web.bind.annotation.*;
 
         import java.util.List;

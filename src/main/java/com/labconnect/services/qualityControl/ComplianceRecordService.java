@@ -1,10 +1,11 @@
 package com.labconnect.services.qualityControl;
 
-import com.labconnect.DTORequest.ComplianceRecordRequestDTO;
-import com.labconnect.DTOResponse.ComplianceRecordResponseDTO;
-import com.labconnect.mapper.ComplianceRecordMapper;
-import com.labconnect.models.ComplianceRecord;
-import com.labconnect.repository.ComplianceRecordRepository;
+
+import com.labconnect.DTORequest.qualityControl.ComplianceRecordRequestDTO;
+import com.labconnect.DTOResponse.qualityControl.ComplianceRecordResponseDTO;
+import com.labconnect.mapper.qualityControl.ComplianceRecordMapper;
+import com.labconnect.models.qualityControl.ComplianceRecord;
+import com.labconnect.repository.qualityControl.ComplianceRecordRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

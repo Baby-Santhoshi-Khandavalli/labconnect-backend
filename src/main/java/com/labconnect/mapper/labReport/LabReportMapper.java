@@ -1,13 +1,19 @@
 package com.labconnect.mapper.labReport;
 
-import com.labconnect.DTORequest.LabReportRequestDTO;
-import com.labconnect.DTOResponse.LabReportResponseDTO;
-import com.labconnect.models.LabReport;
+import com.labconnect.DTORequest.labReport.LabReportRequestDTO;
+import com.labconnect.DTOResponse.labReport.LabReportResponseDTO;
+import com.labconnect.models.labReport.LabReport;
 import org.mapstruct.*;
 
         import java.util.List;
 
-@Mapper(componentModel = "spring")
+//@Mapper(componentModel = "spring")
+@
+        Mapper(
+        componentModel = "spring",
+        implementationName = "LabReportMapperModuleImpl"
+)
+
 public interface LabReportMapper {
 
     // LabReportRequestDTO -> LabReport

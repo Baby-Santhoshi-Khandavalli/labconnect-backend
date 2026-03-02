@@ -37,7 +37,7 @@ public class OrderSpecimenService {
         // 1. Fetch the User and set it to the Clinician field
         User clinician = userRepository.findById(clinicianId)
                 .orElseThrow(() -> new NotFoundException("Clinician not found with ID: " + clinicianId));
-        order.setClinician(clinician);
+        order.setClinicianId(clinician);
 
         if (order.getPatientId() == null || order.getPriority() == null) {
             throw new BadRequestException("Missing required fields: patientId/priority");

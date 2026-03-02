@@ -1,6 +1,6 @@
 package com.labconnect.repository.qualityControl;
 
-import com.labconnect.models.ComplianceRecord;
+import com.labconnect.models.qualityControl.ComplianceRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
