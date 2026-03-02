@@ -3,6 +3,7 @@ package com.labconnect.service;
 
 import com.labconnect.models.LabReport;
 import com.labconnect.repository.LabReportRepository;
+import com.labconnect.Exception.ReportNotFoundException;
 import com.labconnect.services.DashboardService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
