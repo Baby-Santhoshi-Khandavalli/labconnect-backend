@@ -1,5 +1,7 @@
 package com.labconnect.models;
 
+import com.labconnect.models.Identity.User;
+import com.labconnect.models.orderSpecimen.LabOrder;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;

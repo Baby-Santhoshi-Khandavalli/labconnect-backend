@@ -7,6 +7,7 @@ package com.labconnect.service;
 import com.labconnect.models.TestResult;
 import com.labconnect.repository.ResultAuthorizationRepository;
 import com.labconnect.repository.TestResultRepository;
+import com.labconnect.services.ResultService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

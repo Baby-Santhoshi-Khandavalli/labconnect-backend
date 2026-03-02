@@ -3,7 +3,7 @@ package com.labconnect.mapper;
 //import com.labconnect.dto.request.TestWorkflowRequestDTO;
 import com.labconnect.DTORequest.TestWorkflowRequestDTO;
 import com.labconnect.DTOResponse.TestWorkflowResponseDTO;
-import com.labconnect.models.LabOrder;
+import com.labconnect.models.orderSpecimen.LabOrder;
 import com.labconnect.models.Test;
 import com.labconnect.models.TestWorkflow;
 import org.mapstruct.Mapper;

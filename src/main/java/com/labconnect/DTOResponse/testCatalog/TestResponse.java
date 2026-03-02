@@ -1,0 +1,17 @@
+package com.labconnect.DTOResponse.testCatalog;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class TestResponse{
+    private Long testId;
+    private String name;
+    private String department;
+    private String method;
+    private String status;
+}

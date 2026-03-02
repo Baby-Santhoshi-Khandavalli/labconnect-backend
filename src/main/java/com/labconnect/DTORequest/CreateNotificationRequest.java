@@ -1,7 +1,7 @@
 package com.labconnect.DTORequest;
 
 
-import com.labconnect.models.Notification;
+import com.labconnect.models.notification.Notification;
 import lombok.Data;
 
 @Data

@@ -1,5 +1,5 @@
 package com.labconnect.repository;
-import com.labconnect.models.LabOrder;
+import com.labconnect.models.orderSpecimen.LabOrder;
 import com.labconnect.models.ResultAuthorization;
 import com.labconnect.models.TestResult;
 import com.labconnect.models.TestWorkflow;

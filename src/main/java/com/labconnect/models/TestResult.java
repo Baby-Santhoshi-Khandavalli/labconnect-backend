@@ -86,6 +86,7 @@
 package com.labconnect.models;
 
 import com.labconnect.Enum.Flag;
+import com.labconnect.models.Identity.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
 package com.labconnect.security;
 
-import com.labconnect.repository.UserRepository;
+import com.labconnect.repository.Identity.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -32,7 +32,10 @@ public class JwtService {
         if(user!=null){
             claims.put("role", user.getRole().name());
         }
-        return Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis()+1000*60*60)).signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+        return Jwts.builder().setClaims(claims).setSubject(username)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*60))
+                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 
     private Key getSignKey(){
@@ -44,12 +47,14 @@ public class JwtService {
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
-        final Claims claims=Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
+        final Claims claims=Jwts.parserBuilder().setSigningKey(getSignKey()).build()
+                .parseClaimsJws(token).getBody();
         return claimsResolver.apply(claims);
     }
 
     public Boolean validateToken(String token, UserDetails userDetails){
         final String username=extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !extractClaim(token, Claims::getExpiration).before(new Date()));
+        return (username.equals(userDetails.getUsername())
+                && !extractClaim(token, Claims::getExpiration).before(new Date()));
     }
 }
