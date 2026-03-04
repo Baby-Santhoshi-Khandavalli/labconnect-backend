@@ -1,5 +1,6 @@
 package com.labconnect.Enum;
 
 public enum Method {
-    Manual,Automated,POCT
+   // MANUAL, AUTOMATED, POCT
+   Manual,Automated,POCT
 }

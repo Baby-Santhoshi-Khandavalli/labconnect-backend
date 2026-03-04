@@ -8,5 +8,7 @@ import java.util.List;
 public interface LabOrderRepository extends JpaRepository<LabOrder, Long> {
     List<LabOrder> findByStatus(LabOrder.OrderStatus status);
     List<LabOrder> findByPatientId(Long patientId);
-    List<LabOrder> findByClinicianUserId(Long userId);
+    //List<LabOrder> findByClinicianUserId(Long userId);
+    //List<LabOrder> findByClinicianId_UserId(Long userId);
+    List<LabOrder> findByClinicianId(com.labconnect.models.Identity.User clinician);
 }

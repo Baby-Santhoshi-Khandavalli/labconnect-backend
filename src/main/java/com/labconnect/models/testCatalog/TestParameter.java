@@ -1,7 +1,8 @@
 package com.labconnect.models.testCatalog;
 import com.labconnect.Enum.Flag;
-import com.labconnect.models.testCatalog.Test;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Entity
@@ -12,7 +13,9 @@ public class TestParameter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long  parameterId;
+    //@NotBlank
     private String name;
+    //@Size(max=30)
     private String unit;
     private String referenceRange;
     @Enumerated(EnumType.STRING)

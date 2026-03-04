@@ -1,5 +1,5 @@
 server:
-  port: 7071   # Dev port
+  port: 7071
 
 spring:
   h2:
@@ -17,3 +17,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+       format_sql: true

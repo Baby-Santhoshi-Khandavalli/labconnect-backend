@@ -15,6 +15,9 @@ import java.util.Set;
 @Table(name = "lab_order")
 public class LabOrder {
 
+
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;

@@ -1,9 +1,9 @@
 package com.labconnect.models.Identity;
-
-import com.labconnect.models.Identity.AuditLog;
 import com.labconnect.models.notification.Notification;
 import com.labconnect.models.orderSpecimen.LabOrder;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.List;
@@ -15,12 +15,19 @@ public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long userId;
+    ///
+    @NotBlank
     private String name;
 
     @Enumerated(EnumType.STRING)
+    ///
+    @Column(nullable = false)
     private Role role;
 
-    @Column(unique = true)
+//    @Column(unique = true)
+    @Column(unique=true, nullable = false)
+    @Email
+    @NotBlank
     private String email;
     private String password;
     private String phone;

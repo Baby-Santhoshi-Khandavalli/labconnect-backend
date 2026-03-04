@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LabReportRepository extends JpaRepository<LabReport, Long> {
     // You can add custom queries here if needed
+
 }

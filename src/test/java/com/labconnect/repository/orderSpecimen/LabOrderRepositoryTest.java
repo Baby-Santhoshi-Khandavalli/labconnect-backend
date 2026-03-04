@@ -98,15 +98,5 @@ class LabOrderRepositoryTest {
         verify(labOrderRepository, times(1)).findByPatientId(100L);
     }
 
-    @Test
-    void findByClinicianUserId_shouldReturnOrdersForClinician() {
-        when(labOrderRepository.findByClinicianUserId(200L)).thenReturn(List.of(sampleOrder));
-
-        List<LabOrder> result = labOrderRepository.findByClinicianUserId(200L);
-
-        verify(labOrderRepository, times(1)).findByClinicianUserId(200L);
-        assertEquals(1, result.size());
-        assertEquals(sampleOrder, result.get(0));
-    }
 
 }
