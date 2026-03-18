@@ -1,4 +1,4 @@
-package com.labconnect.exception.testCatalog;
+package com.labconnect.Exception.testCatalog;
 
 public class TestException extends RuntimeException{
     public TestException(String message) {

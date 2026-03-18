@@ -15,4 +15,7 @@ public class TestResultResponseDTO {
     //from 1st string then user now Long
     private Long enteredBy;
     private LocalDateTime enteredDate;
+    private String interpretation;
+    private Long orderId;
+    private Long patientId;
 }

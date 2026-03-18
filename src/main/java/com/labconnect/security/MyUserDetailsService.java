@@ -3,15 +3,17 @@ package com.labconnect.security;
 import com.labconnect.models.Identity.User;
 import com.labconnect.repository.Identity.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
+
     private final UserRepository userRepository;
 
     @Autowired
@@ -21,16 +23,23 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+
         User user = userRepository.findByEmail(email.toLowerCase().trim());
+
         if (user == null) {
-            System.out.println("DEBUG: User NOT found in DB with email: " + email);
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("User not found: " + email);
         }
-        System.out.println("DEBUG: User found! Hashed password in DB is: " + user.getPassword());
+
+        // Convert enum (Pathologist) → ROLE_PATHOLOGIST
+        String roleName = "ROLE_" + user.getRole().name().toUpperCase();
+
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(roleName);
+
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
-                new ArrayList<>() // Or your roles
+                List.of(authority)   // <-- ROLE ATTACHED HERE
         );
     }
 }

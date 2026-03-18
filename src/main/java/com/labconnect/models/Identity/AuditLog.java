@@ -1,6 +1,5 @@
 package com.labconnect.models.Identity;
 
-import com.labconnect.models.Identity.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,7 +12,6 @@ public class AuditLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long auditId;
- /// user_id changed the name if _ then error
     @ManyToOne
     @JoinColumn(name="userid")
     private User user;

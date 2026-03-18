@@ -10,7 +10,4 @@ import java.util.List;
 public interface TestWorkFlowRepository extends JpaRepository<TestWorkFlow, Long> {
     List<TestWorkFlow> findByStatus(WorkflowStatus status);
 
-    List<TestWorkFlow> findByOrderOrderId(Long orderId);
-
-    List<TestWorkFlow> findByTestTestId(Long testId);
 }

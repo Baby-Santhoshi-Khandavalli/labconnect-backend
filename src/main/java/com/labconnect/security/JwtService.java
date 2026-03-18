@@ -32,7 +32,8 @@ public class JwtService {
         //fetch user from DB to get their role
         var user=userRepository.findByEmail(username);
         if(user!=null){
-            claims.put("role", user.getRole().name());
+            claims.put("role", "ROLE_"+user.getRole().name().toUpperCase());
+            claims.put("userId", user.getUserId());
         }
         return Jwts.builder().setClaims(claims).setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))

@@ -34,6 +34,8 @@ public class TestResult {
 
     private LocalDateTime enteredDate;
 
+    @Column(name = "interpretation")
+    private String interpretation;
 
     @OneToOne(mappedBy = "testResult", cascade = CascadeType.ALL)
     private ResultAuthorization authorization;

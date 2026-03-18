@@ -1,21 +1,21 @@
 package com.labconnect.repository.workFlow;
 
-
 import com.labconnect.Enum.WorkflowStatus;
 import com.labconnect.models.workFlow.TestWorkFlow;
-import com.labconnect.repository.workFlow.TestWorkFlowRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-//import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@EnableJpaRepositories(basePackages = "com.labconnect.repository.workFlow")
+@EntityScan(basePackages = "com.labconnect.models.workFlow")
 class WorkFlowRepositoryTest {
 
     @Autowired
@@ -23,13 +23,22 @@ class WorkFlowRepositoryTest {
 
     @Test
     void testFindByStatus() {
-        TestWorkFlow workflow = new TestWorkFlow();
-        workflow.setStatus(WorkflowStatus.PENDING);
-        repository.save(workflow);
+        // Arrange: create and save workflows
+        TestWorkFlow pendingWorkflow = new TestWorkFlow();
+        pendingWorkflow.setStatus(WorkflowStatus.PENDING);
+        pendingWorkflow.setStartTime(LocalDateTime.now());
+        repository.save(pendingWorkflow);
 
-        List<TestWorkFlow> result = repository.findByStatus(WorkflowStatus.PENDING);
+        TestWorkFlow completedWorkflow = new TestWorkFlow();
+        completedWorkflow.setStatus(WorkflowStatus.COMPLETED);
+        completedWorkflow.setStartTime(LocalDateTime.now());
+        repository.save(completedWorkflow);
 
-        assertFalse(result.isEmpty());
-        assertEquals(WorkflowStatus.PENDING, result.get(0).getStatus());
+        // Act: query by status
+        List<TestWorkFlow> pendingResults = repository.findByStatus(WorkflowStatus.PENDING);
+
+        // Assert: only pending workflows are returned
+        assertThat(pendingResults).hasSize(1);
+        assertThat(pendingResults.get(0).getStatus()).isEqualTo(WorkflowStatus.PENDING);
     }
 }

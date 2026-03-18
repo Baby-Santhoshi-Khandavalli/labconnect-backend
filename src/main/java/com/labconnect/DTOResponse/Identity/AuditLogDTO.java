@@ -1,6 +1,5 @@
 package com.labconnect.DTOResponse.Identity;
 
-
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,4 +12,3 @@ public class AuditLogDTO {
     private LocalDateTime timestamp;
     private String metadata;
 }
-

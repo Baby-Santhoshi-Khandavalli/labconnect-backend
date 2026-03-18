@@ -1,26 +1,32 @@
 package com.labconnect.controller.qualityControl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.labconnect.DTORequest.qualityControl.ComplianceRecordRequestDTO;
 import com.labconnect.DTOResponse.qualityControl.ComplianceRecordResponseDTO;
+import com.labconnect.security.JwtService;
+import com.labconnect.security.MyUserDetailsService;
 import com.labconnect.services.qualityControl.ComplianceRecordService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(ComplianceRecordController.class)
+@WebMvcTest(
+        controllers = ComplianceRecordController.class,
+        excludeAutoConfiguration = { SecurityAutoConfiguration.class }
+)
 class ComplianceRecordControllerTest {
 
     @Autowired
@@ -29,46 +35,90 @@ class ComplianceRecordControllerTest {
     @MockitoBean
     private ComplianceRecordService service;
 
+    @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
+    private MyUserDetailsService myUserDetailsService;
+
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
     void testCreateRecord() throws Exception {
-        ComplianceRecordRequestDTO request = new ComplianceRecordRequestDTO();
-        request.setTestId(123L);
-        request.setAuditType("Calibration");
-        request.setNotes("Instrument recalibrated");
+        ComplianceRecordRequestDTO requestDTO = new ComplianceRecordRequestDTO();
+        requestDTO.setTestId(1L);
+        requestDTO.setAuditType("Internal");
+        requestDTO.setNotes("Routine audit");
 
-        ComplianceRecordResponseDTO response = new ComplianceRecordResponseDTO();
-        response.setRecordId(1L);
-        response.setTestId(123L);
-        response.setAuditType("Calibration");
-        response.setNotes("Instrument recalibrated");
-        response.setLoggedDate(LocalDateTime.now());
+        ComplianceRecordResponseDTO responseDTO = new ComplianceRecordResponseDTO();
+        responseDTO.setRecordId(100L);
+        responseDTO.setTestId(1L);
+        responseDTO.setAuditType("Internal");
+        responseDTO.setNotes("Routine audit");
+        responseDTO.setLoggedDate(LocalDateTime.now());
 
-        Mockito.when(service.createComplianceRecord(Mockito.any())).thenReturn(response);
+        Mockito.when(service.createComplianceRecord(any(ComplianceRecordRequestDTO.class)))
+                .thenReturn(responseDTO);
 
-        mockMvc.perform(post("/api/compliance")
+        mockMvc.perform(post("/api/compliance-records")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.testId").value(123))
-                .andExpect(jsonPath("$.auditType").value("Calibration"));
+                        .content(objectMapper.writeValueAsString(requestDTO)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.recordId").value(100L))
+                .andExpect(jsonPath("$.auditType").value("Internal"));
     }
 
     @Test
     void testGetAllRecords() throws Exception {
-        ComplianceRecordResponseDTO response = new ComplianceRecordResponseDTO();
-        response.setRecordId(1L);
-        response.setTestId(123L);
-        response.setAuditType("Calibration");
-        response.setNotes("Instrument recalibrated");
-        response.setLoggedDate(LocalDateTime.now());
+        ComplianceRecordResponseDTO dto = new ComplianceRecordResponseDTO();
+        dto.setRecordId(103L);
+        dto.setTestId(3L);
+        dto.setAuditType("Internal");
+        dto.setNotes("General check");
+        dto.setLoggedDate(LocalDateTime.now());
 
-        Mockito.when(service.getAllRecords()).thenReturn(Collections.singletonList(response));
+        Mockito.when(service.getAllRecords()).thenReturn(List.of(dto));
 
-        mockMvc.perform(get("/api/compliance"))
+        mockMvc.perform(get("/api/compliance-records"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].auditType").value("Calibration"));
+                .andExpect(jsonPath("$[0].recordId").value(103L))
+                .andExpect(jsonPath("$[0].auditType").value("Internal"));
+    }
+
+    @Test
+    void testGetRecordsByTestId() throws Exception {
+        ComplianceRecordResponseDTO dto = new ComplianceRecordResponseDTO();
+        dto.setRecordId(101L);
+        dto.setTestId(1L);
+        dto.setAuditType("Internal");
+        dto.setNotes("Check logs");
+        dto.setLoggedDate(LocalDateTime.now());
+
+        Mockito.when(service.getRecordsByTestId(1L)).thenReturn(List.of(dto));
+
+        mockMvc.perform(get("/api/compliance-records")
+                        .param("testId", "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].recordId").value(101L))
+                .andExpect(jsonPath("$[0].testId").value(1L));
+    }
+
+    @Test
+    void testGetRecordsByAuditType() throws Exception {
+        ComplianceRecordResponseDTO dto = new ComplianceRecordResponseDTO();
+        dto.setRecordId(102L);
+        dto.setTestId(2L);
+        dto.setAuditType("External");
+        dto.setNotes("External audit");
+        dto.setLoggedDate(LocalDateTime.now());
+
+        Mockito.when(service.getRecordsByAuditType("External")).thenReturn(List.of(dto));
+
+        mockMvc.perform(get("/api/compliance-records")
+                        .param("auditType", "External"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].auditType").value("External"))
+                .andExpect(jsonPath("$[0].notes").value("External audit"));
     }
 }

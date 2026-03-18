@@ -59,8 +59,22 @@ public class TestParameterService {
         return mapper.toResponse(saved);
     }
 
+//    @Transactional(readOnly = true)
+//    public List<TestParameterResponse> getParametersByTestId(Long testId) {
+//        return testParameterRepository.findByTest_TestId(testId)
+//                .stream()
+//                .map(mapper::toResponse)
+//                .toList();
+//    }
+
     @Transactional(readOnly = true)
     public List<TestParameterResponse> getParametersByTestId(Long testId) {
+        // checks whether test id is contains parameters
+        if (!testRepository.existsById(testId)) {
+            throw new RuntimeException("Cannot fetch parameters: Test ID " + testId + " not found.");
+        }
+
+
         return testParameterRepository.findByTest_TestId(testId)
                 .stream()
                 .map(mapper::toResponse)
@@ -74,10 +88,5 @@ public class TestParameterService {
         log.info("Parameter {} deleted successfully", parameterId);
     }
 
-    // If you still need a "search" method, reuse the same DTO list:
-    @Transactional(readOnly = true)
-    public List<TestParameterResponse> findByTest_TestId(Long testId) {
-        return getParametersByTestId(testId);
-    }
 }
 

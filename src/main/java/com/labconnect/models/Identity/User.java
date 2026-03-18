@@ -1,49 +1,46 @@
 package com.labconnect.models.Identity;
+
 import com.labconnect.models.notification.Notification;
 import com.labconnect.models.orderSpecimen.LabOrder;
+import com.labconnect.models.testResult.ResultAuthorization;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Data
-@Table(name="app_users")
+@Table(name = "app_users")
 public class User {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId;
-    ///
-    @NotBlank
+
     private String name;
 
     @Enumerated(EnumType.STRING)
-    ///
-    @Column(nullable = false)
     private Role role;
 
-//    @Column(unique = true)
-    @Column(unique=true, nullable = false)
-    @Email
-    @NotBlank
+    @Column(unique = true)
     private String email;
+
     private String password;
     private String phone;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<AuditLog> auditLogs;
-///
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Notification> notifications;
-//
-//   @OneToMany(mappedBy = "clinician",fetch = FetchType.EAGER)
-   @OneToMany(mappedBy = "clinicianId",fetch = FetchType.EAGER)
-   private List<LabOrder> orders;
+
+    @OneToMany(mappedBy = "pathologist", cascade = CascadeType.ALL)
+    private List<ResultAuthorization> authorizations;
+
+    @OneToMany(mappedBy = "clinicianId", cascade = CascadeType.ALL)
+    private List<LabOrder> labOrders;
 
 
-    public enum Role{
-        Clinician,Technician,Pathologist,Manager,Admin
-    }
+    public enum Role { Clinician, Technician, Pathologist, Manager, Admin }
 }

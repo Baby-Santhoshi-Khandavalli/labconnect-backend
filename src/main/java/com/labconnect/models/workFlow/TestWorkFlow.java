@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "TestWorkflow")
+@Table(name = "test_workflow")
 public class TestWorkFlow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

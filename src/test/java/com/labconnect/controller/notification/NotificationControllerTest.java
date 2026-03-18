@@ -2,7 +2,6 @@ package com.labconnect.controller.notification;
 
 import com.labconnect.DTORequest.notification.UpdateNotificationStatusRequest;
 import com.labconnect.DTOResponse.notification.NotificationResponse;
-import com.labconnect.controller.notification.NotificationController;
 import com.labconnect.models.notification.Notification;
 import com.labconnect.services.notification.NotificationService;
 import org.junit.jupiter.api.BeforeEach;

@@ -11,14 +11,7 @@ import java.util.List;
 @Service
 public class TestWorkFlowService {
     private final TestWorkFlowRepository repository;
-//    private final PanelMappingRepository panelMappingRepo;
-//    private final TestRepository testRepo;
 
-    //    public TestWorkFlowService(TestWorkflowRepository repository, PanelMappingRepository panelMappingRepo, TestRepository testRepo) {
-//        this.repository = repository;
-//        this.panelMappingRepo = panelMappingRepo;
-//        this.testRepo = testRepo;
-//    }
     public TestWorkFlowService(TestWorkFlowRepository repository) {
         this.repository = repository;
     }

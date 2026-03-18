@@ -7,6 +7,7 @@ import com.labconnect.models.testCatalog.TestPanel;
 import com.labconnect.repository.testCatalog.PanelMappingRepository;
 import com.labconnect.repository.testCatalog.TestPanelRepository;
 import com.labconnect.repository.testCatalog.TestRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,22 +38,45 @@ public class PanelMappingService {
                 .toList();                         // If you're on Java <16, use .collect(Collectors.toList())
     }
 
+//    @Transactional
+//    public PanelMappingResponse addTestToPanel(Long panelId, Long testId) {
+//        if (mappingRepository.existsByPanel_PanelIdAndTest_TestId(panelId, testId)) {
+//            throw new RuntimeException("Test already exists in panel");
+//        }
+//        TestPanel panel = panelRepository.findById(panelId)
+//                .orElseThrow(() -> new RuntimeException("Panel not found"));
+//        Test test = testRepository.findById(testId)
+//                .orElseThrow(() -> new RuntimeException("Test not found"));
+//
+//        PanelMapping mapping = new PanelMapping();
+//        mapping.setPanel(panel);
+//        mapping.setTest(test);
+//
+//        PanelMapping saved = mappingRepository.save(mapping);
+//        return mapper.toResponse(saved);           // <-- instance method
+//    }
+
+
     @Transactional
     public PanelMappingResponse addTestToPanel(Long panelId, Long testId) {
         if (mappingRepository.existsByPanel_PanelIdAndTest_TestId(panelId, testId)) {
-            throw new RuntimeException("Test already exists in panel");
+            // Load and return existing mapping
+            PanelMapping existing = mappingRepository.findByPanel_PanelId(panelId).stream()
+                    .filter(m -> m.getTest().getTestId().equals(testId))
+                    .findFirst()
+                    .orElseThrow(); // shouldn't happen if existsBy... was true
+            return mapper.toResponse(existing);
         }
+
         TestPanel panel = panelRepository.findById(panelId)
-                .orElseThrow(() -> new RuntimeException("Panel not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Panel not found"));
         Test test = testRepository.findById(testId)
-                .orElseThrow(() -> new RuntimeException("Test not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Test not found"));
 
         PanelMapping mapping = new PanelMapping();
         mapping.setPanel(panel);
         mapping.setTest(test);
-
-        PanelMapping saved = mappingRepository.save(mapping);
-        return mapper.toResponse(saved);           // <-- instance method
+        return mapper.toResponse(mappingRepository.save(mapping));
     }
 
     @Transactional

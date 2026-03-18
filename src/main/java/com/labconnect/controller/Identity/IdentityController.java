@@ -1,13 +1,12 @@
 package com.labconnect.controller.Identity;
 
-import com.labconnect.DTORequest.Identity.LoginRequest;
 import com.labconnect.DTORequest.Identity.UserRequestDTO;
+import com.labconnect.DTORequest.Identity.LoginRequest;
+
 import com.labconnect.DTOResponse.Identity.AuditLogDTO;
 import com.labconnect.DTOResponse.Identity.UserResponseDTO;
-import com.labconnect.Exception.Identity.ResourceNotFoundException;
-import com.labconnect.models.Identity.AuditLog;
-import com.labconnect.models.Identity.User;
 import com.labconnect.security.JwtService;
+
 import com.labconnect.services.Identity.IdentityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins="http://localhost:3000")
 @RestController
 @RequestMapping("/api/identity")
 public class IdentityController {
@@ -38,17 +38,9 @@ public class IdentityController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-//    @PostMapping("/login")
-//    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest){
-//        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-//        String token= jwtService.generateToken(loginRequest.getEmail());
-//        return ResponseEntity.ok(token);
-//    }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
-            // This is the "Magic" line that checks the email and password in the DB
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getEmail(),
@@ -56,72 +48,26 @@ public class IdentityController {
                     )
             );
 
-            // If we reach here, the password was correct!
             String token = jwtService.generateToken(loginRequest.getEmail());
             return ResponseEntity.ok(token);
 
         } catch (Exception e) {
             e.printStackTrace();
-            // If password is wrong or user doesn't exist, return 401
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
     }
 
-//    @GetMapping("/users")
-//    public List<User> getUsers(){
-//        return identityService.getAllUsers();
-//    }
-
-//    @GetMapping("/users")
-//    public ResponseEntity<List<UserResponseDTO>> getAllUsers(){
-//        try{
-//            List<UserResponseDTO> users=identityService.getAllUsers();
-//            return new ResponseEntity<>(users,HttpStatus.OK);
-//        }catch (Exception e){
-//            return new ResponseEntity(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 
     @GetMapping("/users")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserResponseDTO>> getAllUsers(){
         return ResponseEntity.ok(identityService.getAllUsers());
     }
 
-//    @PostMapping("/users")
-//    public User createUser(@RequestBody User user){
-//        return identityService.createUser(user);
-//    }
-
-//    @PostMapping("/users")
-//    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO){
-//        try{
-//            UserResponseDTO createdUser=identityService.createUser(userRequestDTO);
-//            return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-//        }catch (Exception e){
-//            return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
-    @PostMapping("/users")
-    // @PreAuthorize("hasRole('Admin')")  // Only Admin can create users
+    @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO){
         return new ResponseEntity<>(identityService.createUser(userRequestDTO),HttpStatus.CREATED);
     }
-
-//    @GetMapping("/users/{email}")
-//    public User getUserByEmail(@PathVariable String email){
-//        return identityService.getUserByEmail(email);
-//    }
-
-//    @GetMapping("/users/{email}")
-//    public ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable String email){
-//        try{
-//            UserResponseDTO user=identityService.getUserByEmail(email);
-//            return new ResponseEntity<>(user,HttpStatus.OK);
-//        }catch (ResourceNotFoundException e){
-//            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
-//        }
-//    }
 
     @GetMapping("/users/{email}")
     public ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable String email){
@@ -129,38 +75,18 @@ public class IdentityController {
     }
 
     @PutMapping("/users/{id}")
-    @PreAuthorize("hasRole('Admin')")
-    public ResponseEntity<UserResponseDTO> updateUser
-            (@PathVariable Long id, @RequestBody UserRequestDTO userRequestDTO){
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UserRequestDTO userRequestDTO){
         return ResponseEntity.ok(identityService.updateUser(id,userRequestDTO));
     }
 
     @DeleteMapping("/users/{id}")
-    @PreAuthorize("hasAuthority('Admin')") // Only Admins can delete users
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         identityService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
-//    @GetMapping("/audit/{userId}")
-//    public List<AuditLog> getAuditLogsForUser(@PathVariable Long userId){
-//        return identityService.getAuditLogsForUser(userId);
-//    }
-
-//    @GetMapping("/audit/{userId}")
-//    public ResponseEntity<List<AuditLogDTO>> getAuditLogsForUser(@PathVariable Long userId){
-//        try{
-//            List<AuditLogDTO> logs=identityService.getAuditLogsForUser(userId);
-//            return new ResponseEntity<>(logs,HttpStatus.OK);
-//        }catch (ResourceNotFoundException e){
-//            return new ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND);
-//        }
-//    }
-
     @GetMapping("/audit/{userId}")
-    @PreAuthorize("hasRole('Admin')")  // Only Admin monitors audit trails
     public ResponseEntity<List<AuditLogDTO>> getAuditLogsForUser(@PathVariable Long userId){
         return ResponseEntity.ok(identityService.getAuditLogsForUser(userId));
     }
 }
-

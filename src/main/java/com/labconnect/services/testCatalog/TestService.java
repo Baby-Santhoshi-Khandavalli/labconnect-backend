@@ -2,7 +2,7 @@ package com.labconnect.services.testCatalog;
 import com.labconnect.DTOResponse.testCatalog.TestResponse;
 import com.labconnect.Enum.Status;
 import com.labconnect.DTORequest.testCatalog.TestRequest;
-import com.labconnect.exception.testCatalog.TestException;
+import com.labconnect.Exception.testCatalog.TestException;
 import com.labconnect.Exception.testCatalog.TestResultNotFoundException;
 import com.labconnect.mapper.testCatalog.TestMapper;
 import com.labconnect.models.testCatalog.Test;
@@ -66,5 +66,12 @@ public class TestService {
                 .stream()
                 .map(testMapper::toResponseDto)
                 .toList();
+    }
+    @Transactional
+    public void deleteTest(Long id) {
+        if (!testRepository.existsById(id)) {
+            throw new TestException("Cannot delete: Test ID " + id + " not found.");
+        }
+        testRepository.deleteById(id);
     }
 }

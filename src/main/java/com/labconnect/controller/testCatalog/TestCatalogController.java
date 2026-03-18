@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/tests")
 public class TestCatalogController {
     private final TestService testService;
@@ -63,16 +64,32 @@ public class TestCatalogController {
     public ResponseEntity<List<TestParameterResponse>> getParameters(@PathVariable Long testId) {
         return ResponseEntity.ok(parameterService.getParametersByTestId(testId));
     }
-
-    @GetMapping("/parameters/search/{testId1}")
-    public ResponseEntity<List<TestParameterResponse>> getByTestId(@PathVariable("testId1") Long testId1) {
-        return ResponseEntity.ok(parameterService.findByTest_TestId(testId1));
-    }
+//repeated
+//    @GetMapping("/parameters/search/{testId1}")
+//    public ResponseEntity<List<TestParameterResponse>> getByTestId(@PathVariable("testId1") Long testId1) {
+//        return ResponseEntity.ok(parameterService.findByTest_TestId(testId1));
+//    }
 
     @PutMapping("/parameters/{parameterId}")
     public ResponseEntity<TestParameterResponse> updateParameters(@PathVariable Long parameterId,
                                                                   @RequestBody TestParameterRequest updateData) {
         return ResponseEntity.ok(parameterService.updateParameter(parameterId, updateData));
+    }
+    //
+    @DeleteMapping("/parameters/{parameterId}")
+    public ResponseEntity<Void> deleteParameter(@PathVariable Long parameterId) {
+        try {
+            parameterService.deleteParameter(parameterId);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            // Log error and return 404 if the parameter didn't exist
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @DeleteMapping("/tests/{id}")
+    public ResponseEntity<Void> deleteTest(@PathVariable Long id) {
+        testService.deleteTest(id);
+        return ResponseEntity.noContent().build();
     }
 
     //TESTPANEL

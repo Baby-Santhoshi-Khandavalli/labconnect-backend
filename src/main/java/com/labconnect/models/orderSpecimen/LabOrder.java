@@ -5,6 +5,7 @@ import com.labconnect.models.testResult.ResultAuthorization;
 import com.labconnect.models.workFlow.TestWorkFlow;
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -22,17 +23,17 @@ public class LabOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    // SIMPLE COLUMN: This fixes the "java.lang.Long is not an @Entity" crash
+    // SIMPLE COLUMN: patient is stored as an ID (not a relation)
     @Column(name = "patient_id")
     private Long patientId;
 
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
-    private LabOrder.Priority priority;
+    private Priority priority;
 
     @Enumerated(EnumType.STRING)
-    private LabOrder.OrderStatus status;
+    private OrderStatus status;
 
     @ElementCollection
     private Set<Long> testIds = new LinkedHashSet<>();
@@ -40,11 +41,10 @@ public class LabOrder {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Specimen> specimens = new LinkedHashSet<>();
 
-    // RELATIONSHIP: Keep this because the User entity exists
+    // RELATIONSHIP: clinician user (inverse is User.labOrders mappedBy="clinicianId")
     @ManyToOne
     @JoinColumn(name = "clinician_id")
     private User clinicianId;
-//    private User clinician;
 
     @OneToMany(mappedBy = "order")
     private List<TestWorkFlow> workflows;

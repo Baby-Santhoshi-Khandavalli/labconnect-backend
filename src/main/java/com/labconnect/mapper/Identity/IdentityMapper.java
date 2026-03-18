@@ -1,5 +1,6 @@
 package com.labconnect.mapper.Identity;
 
+
 import com.labconnect.DTORequest.Identity.UserRequestDTO;
 import com.labconnect.DTORequest.notification.UpdateNotificationStatusRequest;
 import com.labconnect.DTOResponse.Identity.AuditLogDTO;
@@ -11,7 +12,7 @@ import com.labconnect.models.notification.Notification;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", implementationName = "IdentitySubMapperImpl")
+@Mapper(componentModel = "spring")
 public interface IdentityMapper {
     UserResponseDTO mapToUserResponseDTO(User user);
 

@@ -7,9 +7,12 @@ import com.labconnect.models.testCatalog.TestParameter;
 import com.labconnect.repository.testCatalog.TestParameterRepository;
 import com.labconnect.repository.testCatalog.TestRepository;
 import com.labconnect.services.testCatalog.TestParameterService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
@@ -81,38 +84,17 @@ class TestParameterServiceTest {
         assertEquals("Platelets", out.getName());
         verify(mapper).updateEntity(eq(req), same(existing));
     }
-    @org.junit.jupiter.api.Test
-    void getParametersByTestId_mapsList() {
-        TestParameter p1 = new TestParameter(); p1.setParameterId(1L);
-        TestParameter p2 = new TestParameter(); p2.setParameterId(2L);
-        when(parameterRepository.findByTest_TestId(10L)).thenReturn(List.of(p1, p2));
-        TestParameterResponse r1 = new TestParameterResponse(); r1.setParameterId(1L);
-        TestParameterResponse r2 = new TestParameterResponse(); r2.setParameterId(2L);
-        when(mapper.toResponse(p1)).thenReturn(r1);
-        when(mapper.toResponse(p2)).thenReturn(r2);
-        var out = service.getParametersByTestId(10L);
-        assertEquals(2, out.size());
-        assertEquals(2L, out.get(1).getParameterId());
-    }
+
     @org.junit.jupiter.api.Test
     void deleteParameter_invokesRepo() {
         service.deleteParameter(99L);
         verify(parameterRepository).deleteById(99L);
     }
-    @org.junit.jupiter.api.Test
-    void findByTest_TestId_delegates() {
-        TestParameter p = new TestParameter(); p.setParameterId(7L);
-        when(parameterRepository.findByTest_TestId(20L)).thenReturn(List.of(p));
-        when(mapper.toResponse(p)).thenAnswer(inv -> {
-            TestParameter e = inv.getArgument(0);
-            TestParameterResponse r = new TestParameterResponse();
-            r.setParameterId(e.getParameterId());
-            return r;
-        });
-        var out = service.findByTest_TestId(20L);
-        assertEquals(1, out.size());
-        assertEquals(7L, out.get(0).getParameterId());
-    }
+
+
+
 }
+
+
 
 

@@ -1,14 +1,17 @@
 package com.labconnect.controller.qualityControl;
 
+
 import com.labconnect.DTORequest.qualityControl.ComplianceRecordRequestDTO;
 import com.labconnect.DTOResponse.qualityControl.ComplianceRecordResponseDTO;
 import com.labconnect.services.qualityControl.ComplianceRecordService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/compliance")
+@RequestMapping("/api/compliance-records")
 public class ComplianceRecordController {
 
     private final ComplianceRecordService service;
@@ -17,23 +20,25 @@ public class ComplianceRecordController {
         this.service = service;
     }
 
+    // Create a record
     @PostMapping
-    public ComplianceRecordResponseDTO createRecord(@RequestBody ComplianceRecordRequestDTO request) {
-        return service.createComplianceRecord(request);
+    public ResponseEntity<ComplianceRecordResponseDTO> createRecord(@RequestBody ComplianceRecordRequestDTO request) {
+        ComplianceRecordResponseDTO response = service.createComplianceRecord(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @GetMapping("/test/{testId}")
-    public List<ComplianceRecordResponseDTO> getRecordsByTest(@PathVariable Long testId) {
-        return service.getRecordsByTestId(testId);
-    }
-
-    @GetMapping("/audit/{auditType}")
-    public List<ComplianceRecordResponseDTO> getRecordsByAuditType(@PathVariable String auditType) {
-        return service.getRecordsByAuditType(auditType);
-    }
-
+    // Get all records, optionally filtered
     @GetMapping
-    public List<ComplianceRecordResponseDTO> getAllRecords() {
-        return service.getAllRecords();
+    public ResponseEntity<List<ComplianceRecordResponseDTO>> getRecords(
+            @RequestParam(required = false) Long testId,
+            @RequestParam(required = false) String auditType) {
+
+        if (testId != null) {
+            return ResponseEntity.ok(service.getRecordsByTestId(testId));
+        } else if (auditType != null) {
+            return ResponseEntity.ok(service.getRecordsByAuditType(auditType));
+        } else {
+            return ResponseEntity.ok(service.getAllRecords());
+        }
     }
 }

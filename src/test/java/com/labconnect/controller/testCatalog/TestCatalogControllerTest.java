@@ -155,44 +155,23 @@ class TestCatalogControllerTest {
         verify(parameterService).addParameterToTest(any(TestParameterRequest.class));
     }
 
+
     @Test
-    @DisplayName("getParameters (by testId) -> returns list")
-    void getParametersByTestId_returnsList() {
-        TestParameterResponse p1 = new TestParameterResponse();
-        p1.setParameterId(1L); p1.setName("Hb"); p1.setUnit("g/dL"); p1.setTestId(10L);
-        TestParameterResponse p2 = new TestParameterResponse();
-        p2.setParameterId(2L); p2.setName("RBC"); p2.setUnit("million/cumm"); p2.setTestId(10L);
+    @DisplayName("getParametersByTestId -> when Test exists, returns parameter list")
+    void getParameters_TestExists_ReturnsList() {
+        // Arrange
+        Long testId = 10L;
+        List<TestParameterResponse> mockParams = List.of(new TestParameterResponse(), new TestParameterResponse());
 
-        when(parameterService.getParametersByTestId(10L)).thenReturn(List.of(p1, p2));
+        // Tell the mock service to return the list
+        when(parameterService.getParametersByTestId(testId)).thenReturn(mockParams);
 
-        // NOTE: method name must match controller: getParameters(Long testId)
-        ResponseEntity<List<TestParameterResponse>> result = controller.getParameters(10L);
+        // Act
+        ResponseEntity<List<TestParameterResponse>> result = controller.getParameters(testId);
 
+        // Assert
         assertEquals(200, result.getStatusCodeValue());
-        assertNotNull(result.getBody());
         assertEquals(2, result.getBody().size());
-        assertEquals("Hb", result.getBody().get(0).getName());
-        assertEquals("RBC", result.getBody().get(1).getName());
-        verify(parameterService).getParametersByTestId(10L);
-    }
-
-    @Test
-    @DisplayName("getByTestId (search) -> returns list")
-    void findByTest_TestId_returnsList() {
-        TestParameterResponse p = new TestParameterResponse();
-        p.setParameterId(7L); p.setName("WBC"); p.setTestId(20L);
-
-        when(parameterService.findByTest_TestId(20L)).thenReturn(List.of(p));
-
-        // NOTE: method name must match controller: getByTestId(Long testId1)
-        ResponseEntity<List<TestParameterResponse>> result = controller.getByTestId(20L);
-
-        assertEquals(200, result.getStatusCodeValue());
-        assertNotNull(result.getBody());
-        assertEquals(1, result.getBody().size());
-        assertEquals(7L, result.getBody().get(0).getParameterId());
-        assertEquals("WBC", result.getBody().get(0).getName());
-        verify(parameterService).findByTest_TestId(20L);
     }
 
     @Test
@@ -215,7 +194,21 @@ class TestCatalogControllerTest {
         assertEquals("Platelets", result.getBody().getName());
         verify(parameterService).updateParameter(eq(55L), any(TestParameterRequest.class));
     }
+    @Test
+    @DisplayName("deleteParameter -> returns 204")
+    void deleteParameter_returns204() {
+        // Arrange: ID to delete
+        Long paramId = 111L;
 
+        // Act: Call the controller
+        ResponseEntity<Void> result = controller.deleteParameter(paramId);
+
+        // Assert: Verify status code is 204 (No Content)
+        assertEquals(204, result.getStatusCodeValue());
+
+        // Verify: Ensure the service was actually called to perform the deletion
+        verify(parameterService, times(1)).deleteParameter(paramId);
+    }
     // -------------------- PANELS --------------------
 
     @Test

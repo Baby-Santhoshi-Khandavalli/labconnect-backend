@@ -2,52 +2,64 @@ package com.labconnect.service.labReport;
 
 import com.labconnect.models.labReport.LabReport;
 import com.labconnect.repository.labReport.LabReportRepository;
-//import com.labconnect.Exception.ReportNotFoundException;
 import com.labconnect.services.labReport.DashboardService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
-public class DashboardServiceTest {
+@ExtendWith(MockitoExtension.class)
+class DashboardServiceTest {
 
-    @Autowired
-    private DashboardService dashboardService;
-
-    @MockitoBean // Modern Spring 3.4+ / 4.0 approach
+    @Mock
     private LabReportRepository labReportRepository;
 
+    @InjectMocks
+    private DashboardService dashboardService;
+
     @Test
-    public void testCreateReport_Success() {
+    void createReport_shouldPersistAndReturnSavedEntity() {
         // Arrange
-        LabReport report = new LabReport();
-        report.setScope("Biochemistry");
-        Mockito.when(labReportRepository.save(any(LabReport.class))).thenReturn(report);
+        LabReport input = LabReport.builder()
+                .scope("Hematology")
+                .metrics("{\"white_cell_count\":\"Normal\"}")
+                .generatedDate(LocalDateTime.now().withNano(0))
+                .build();
+
+        LabReport saved = LabReport.builder()
+                .reportId(100L)
+                .scope(input.getScope())
+                .metrics(input.getMetrics())
+                .generatedDate(input.getGeneratedDate())
+                .build();
+
+        when(labReportRepository.save(any(LabReport.class))).thenReturn(saved);
 
         // Act
-        LabReport result = dashboardService.createReport(report);
+        LabReport result = dashboardService.createReport(input);
 
         // Assert
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals("Biochemistry", result.getScope());
-        Mockito.verify(labReportRepository, Mockito.times(1)).save(any());
-    }
+        assertNotNull(result, "Result should not be null");
+        assertEquals(100L, result.getReportId(), "Report ID should be from the saved entity");
+        assertEquals("Hematology", result.getScope(), "Scope should match");
+        assertEquals("{\"white_cell_count\":\"Normal\"}", result.getMetrics(), "Metrics should match");
+        assertEquals(input.getGeneratedDate(), result.getGeneratedDate(), "Generated date should match");
 
-    @Test
-    public void testUpdateReport_ThrowsException() {
-        // Arrange
-        Mockito.when(labReportRepository.findById(99L)).thenReturn(Optional.empty());
+        // Verify repository interaction and captured argument
+        ArgumentCaptor<LabReport> captor = ArgumentCaptor.forClass(LabReport.class);
+        verify(labReportRepository, times(1)).save(captor.capture());
+        LabReport passedToRepo = captor.getValue();
+        assertEquals(input.getScope(), passedToRepo.getScope(), "Service should pass the same scope to repo");
+        assertEquals(input.getMetrics(), passedToRepo.getMetrics(), "Service should pass the same metrics to repo");
+        assertEquals(input.getGeneratedDate(), passedToRepo.getGeneratedDate(), "Service should pass the same date to repo");
 
-        // Act & Assert
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            dashboardService.updateReport(99L, new LabReport());
-        });
+        verifyNoMoreInteractions(labReportRepository);
     }
 }

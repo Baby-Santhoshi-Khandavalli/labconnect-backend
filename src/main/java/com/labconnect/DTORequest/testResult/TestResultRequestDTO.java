@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class TestResultRequestDTO {
+    private Long resultId;
     private Long workflowId;
     private Long parameterId;
     private String value;
@@ -13,4 +14,5 @@ public class TestResultRequestDTO {
     //    private String enteredBy;
     private Long enteredBy;
     private LocalDateTime enteredDate;
+    private String interpretation;
 }

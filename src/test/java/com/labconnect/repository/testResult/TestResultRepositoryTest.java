@@ -1,72 +1,64 @@
 package com.labconnect.repository.testResult;
 
-
 import com.labconnect.Enum.Flag;
+import com.labconnect.models.Identity.User;
 import com.labconnect.models.testCatalog.TestParameter;
 import com.labconnect.models.testResult.TestResult;
 import com.labconnect.models.workFlow.TestWorkFlow;
-import com.labconnect.models.Identity.User;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @DataJpaTest
-public class TestResultRepositoryTest {
+@ActiveProfiles("test")
+class TestResultRepositoryTest {
 
     @Autowired
-    private TestResultRepository testResultRepository;
+    private TestEntityManager em;
 
     @Autowired
-    private TestEntityManager entityManager;
+    private TestResultRepository repository;
 
     @Test
-    public void testSaveAndFindByFlag() {
-        // Arrange: persist required associations
+    @DisplayName("findByFlag: returns results matching the given flag")
+    void findByFlag_returnsExpectedRows() {
+        TestWorkFlow wf = em.persistFlushFind(new TestWorkFlow());
+        TestParameter param = em.persistFlushFind(new TestParameter());
+        User user = em.persistFlushFind(new User());
 
-        // Persist a workflow (set required fields if your entity has NOT NULL constraints)
-        TestWorkFlow workflow = new TestWorkFlow();
-        // e.g., workflow.setStatus(...); workflow.setStage(...); etc.
-        workflow = entityManager.persistAndFlush(workflow);
+        TestResult normal = new TestResult();
+        normal.setWorkflow(wf);
+        normal.setParameter(param);
+        normal.setValue("10.0");
+        normal.setFlag(Flag.NORMAL);
+        normal.setEnteredDate(LocalDateTime.now().minusHours(3));
+        normal.setEnteredBy(user);
+        em.persist(normal);
 
-        // Persist a parameter (set required fields if needed)
-        TestParameter parameter = new TestParameter();
-        // e.g., parameter.setName("Glucose"); parameter.setUnit("mg/dL"); etc.
-        parameter = entityManager.persistAndFlush(parameter);
+        TestResult high = new TestResult();
+        high.setWorkflow(wf);
+        high.setParameter(param);
+        high.setValue("20.0");
+        high.setFlag(Flag.HIGH);
+        high.setEnteredDate(LocalDateTime.now().minusHours(2));
+        high.setEnteredBy(user);
+        em.persist(high);
 
-        // Persist a user who "entered" the result (since enteredBy is a User relation)
-        User technician = new User();
-        technician.setName("Tech Alpha");
-        technician.setEmail("tech.alpha@example.com");
-        technician.setRole(User.Role.Technician);
-        technician = entityManager.persistAndFlush(technician);
+        em.flush();
+        em.clear();
 
-        // Build and save the TestResult
-        TestResult result = new TestResult();
-        result.setWorkflow(workflow);
-        result.setParameter(parameter);
-        result.setValue("14.5");
-        result.setFlag(Flag.HIGH);
+        List<TestResult> results = repository.findByFlag(Flag.HIGH);
 
-        // ✅ enteredBy is a User relation now
-        result.setEnteredBy(technician);
-
-        result.setEnteredDate(LocalDateTime.now());
-
-        testResultRepository.saveAndFlush(result);
-
-        // Act
-        List<TestResult> found = testResultRepository.findByFlag(Flag.HIGH);
-
-        // Assert
-        Assertions.assertFalse(found.isEmpty());
-        Assertions.assertEquals("14.5", found.get(0).getValue());
-
-        // You can also assert the relation:
-        Assertions.assertNotNull(found.get(0));
+        assertThat(results).hasSize(1);
+        assertThat(results.get(0).getFlag()).isEqualTo(Flag.HIGH);
+        assertThat(results.get(0).getValue()).isEqualTo("20.0");
     }
 }

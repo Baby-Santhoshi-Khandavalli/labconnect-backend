@@ -1,5 +1,4 @@
 package com.labconnect.DTORequest.Identity;
-
 import com.labconnect.models.Identity.User.Role;
 import lombok.Data;
 
@@ -11,3 +10,5 @@ public class UserRequestDTO {
     private String phone;
     private Role role;
 }
+
+
